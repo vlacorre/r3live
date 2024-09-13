@@ -1,3 +1,12 @@
+# Fork information
+## Comparison with the upstram repo
+- Made for ROS 2 Humble (Ubuntu 22.04)
+- Can handle the LiDAR Velodyne VLP-32C
+- Can handle IMUs external to the LiDAR (need to provide the extrinsics as parameters)
+- Cannot handle Livox LiDAR
+
+---
+
 # R3LIVE
 ## A Robust, Real-time, RGB-colored, LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping package
 
@@ -27,7 +36,7 @@ All of the mechanical modules of our handheld device that use for data collectio
 ## 2. What can R3LIVE do?
 
 ### 2.1 Strong robustness in various challenging scenarios
-R3LIVE is robust enough to work well in various of LiDAR-degenerated scenarios (see following figures): 
+R3LIVE is robust enough to work well in various of LiDAR-degenerated scenarios (see following figures):
 <div align="center">
 <img src="https://github.com/ziv-lin/r3live_dataset/blob/main/pics/degenerate_01_pic.png" width="98%" />
 <img src="https://github.com/ziv-lin/r3live_dataset/blob/main/pics/degenerate_02_pic.png" width="98%" />
@@ -35,7 +44,7 @@ R3LIVE is robust enough to work well in various of LiDAR-degenerated scenarios (
 <img src="https://github.com/ziv-lin/r3live_dataset/blob/main/gifs/degenerate_02.gif"  width="48%" />
 </div>
 
-And even in simultaneously LiDAR degenerated and visual texture-less environments (see Experiment-1 of our [paper](https://github.com/hku-mars/r3live/blob/master/papers/R3LIVE:%20A%20Robust%2C%20Real-time%2C%20RGB-colored%2C%20LiDAR-Inertial-Visual%20tightly-coupled%20stateEstimation%20and%20mapping%20package.pdf)).  
+And even in simultaneously LiDAR degenerated and visual texture-less environments (see Experiment-1 of our [paper](https://github.com/hku-mars/r3live/blob/master/papers/R3LIVE:%20A%20Robust%2C%20Real-time%2C%20RGB-colored%2C%20LiDAR-Inertial-Visual%20tightly-coupled%20stateEstimation%20and%20mapping%20package.pdf)).
 <div align="center">
 <img src="https://github.com/ziv-lin/r3live_dataset/blob/main/pics/exp_00.png" alt="video" width="48%" />
 <img src="https://github.com/ziv-lin/r3live_dataset/blob/main/gifs/degenerate_00.gif" alt="video" width="48%" />
@@ -96,7 +105,7 @@ source ~/catkin_ws/devel/setup.bash
 ```
 
 ## 5. Run our examples
-### 5.1 Download our rosbag files ([r3live_dataset](https://github.com/ziv-lin/r3live_dataset)) 
+### 5.1 Download our rosbag files ([r3live_dataset](https://github.com/ziv-lin/r3live_dataset))
 Our datasets for evaluation can be download from our [Google drive](https://drive.google.com/drive/folders/15i-TRa0EA8BCbNdARVqPMDsU9JOlagVF?usp=sharing) or [Baidu-NetDisk [百度网盘]](https://pan.baidu.com/s/1zmVxkcwOSul8oTBwaHfuFg) (code提取码: wwxw). We have released totally **9** rosbag files for evaluating r3live, with the introduction of these datasets can be found on this [page](https://github.com/ziv-lin/r3live_dataset).
 
 ### 5.2 Run our examples
@@ -105,7 +114,7 @@ After you have downloaded our bag files, you can now run our example ^_^
 roslaunch r3live r3live_bag.launch
 rosbag play YOUR_DOWNLOADED.bag
 ```
-If everything is correct, you will get the result that matches our [paper](https://github.com/hku-mars/r3live/blob/master/papers/R3LIVE:%20A%20Robust%2C%20Real-time%2C%20RGB-colored%2C%20LiDAR-Inertial-Visual%20tightly-coupled%20stateEstimation%20and%20mapping%20package.pdf) and the results posted on this [page](https://github.com/ziv-lin/r3live_dataset). 
+If everything is correct, you will get the result that matches our [paper](https://github.com/hku-mars/r3live/blob/master/papers/R3LIVE:%20A%20Robust%2C%20Real-time%2C%20RGB-colored%2C%20LiDAR-Inertial-Visual%20tightly-coupled%20stateEstimation%20and%20mapping%20package.pdf) and the results posted on this [page](https://github.com/ziv-lin/r3live_dataset).
 
 ### 5.3 Save the maps to your disk
 R3LIVE allow you to save the maps you build at anytime you wanted. You just need to click on the "Control panel" and press 'S' or 's' key.
@@ -145,7 +154,7 @@ Since the LiDAR data and IMU data published by the official Livox-ros-driver is 
 ### 6.2  Sensor calibration
 In order to launch R3LIVE on your own hardware setup, you need to have a carefully calibration of the extrinsic among LiDAR, Camera and IMU. We recommend you using the following repo to kindly calibrate your sensors:
 
-[**livox_camera_calib**](https://github.com/hku-mars/livox_camera_calib): A robust, high accuracy extrinsic calibration tool between high resolution LiDAR (e.g. Livox) and camera in targetless environment. 
+[**livox_camera_calib**](https://github.com/hku-mars/livox_camera_calib): A robust, high accuracy extrinsic calibration tool between high resolution LiDAR (e.g. Livox) and camera in targetless environment.
 
 ## 7. Support of the spinning LiDAR
 Even though our proposed method is unrelated to what kind of LiDAR you used, it is impossible for us making R3LIVE compatible with all kinds of existing LiDARs. To launch R3LIVE with spinning LIDAR, it requires you to take some effort in modifying the source code of our LiDAR front-end (see [LiDAR_front_end.cpp](https://github.com/hku-mars/r3live/blob/master/r3live/src/loam/LiDAR_front_end.cpp)). Here we give an example to test our LIO-subsystem with an [Ouster-2 64 Line Spinning LIDAR](https://ouster.com/zh-cn/products/scanning-lidar/os2-sensor/).
@@ -153,8 +162,8 @@ Even though our proposed method is unrelated to what kind of LiDAR you used, it 
 ###  7.1 Example-1: Ouster OS2-64
 Download our recorded rosbag file from [here](https://drive.google.com/file/d/1mZoDWDOZOcZ0H6MBMEpGMRc1nueeqToc/view?usp=sharing).
 ```
-roslaunch r3live r3live_bag_ouster.launch 
-rosbag play ouster_example_for_LIO_test.bag 
+roslaunch r3live r3live_bag_ouster.launch
+rosbag play ouster_example_for_LIO_test.bag
 ```
 Notice: We manually disable our VIO-subsystem due the missed of calibration files in this example.
 
@@ -180,10 +189,10 @@ We know our packages might not totally stable in this stage, and we are keep wor
 In the development of R3LIVE, we stand on the shoulders of the following repositories:
 1. [R2LIVE](https://github.com/hku-mars/r2live): A robust, real-time tightly-coupled multi-sensor fusion package.
 2. [FAST-LIO](https://github.com/hku-mars/FAST_LIO): A computationally efficient and robust LiDAR-inertial odometry package.
-3. [ikd-Tree](https://github.com/hku-mars/ikd-Tree): A state-of-art dynamic KD-Tree for 3D kNN search. 
+3. [ikd-Tree](https://github.com/hku-mars/ikd-Tree): A state-of-art dynamic KD-Tree for 3D kNN search.
 4. [livox_camera_calib](https://github.com/hku-mars/livox_camera_calib): A robust, high accuracy extrinsic calibration tool between high resolution LiDAR (e.g. Livox) and camera in targetless environment.
 5. [LOAM-Livox](https://github.com/hku-mars/loam_livox): A robust LiDAR Odometry and Mapping (LOAM) package for Livox-LiDAR.
-6. [openMVS](https://github.com/cdcseacave/openMVS): A library for computer-vision scientists and especially targeted to the Multi-View Stereo reconstruction community.  
+6. [openMVS](https://github.com/cdcseacave/openMVS): A library for computer-vision scientists and especially targeted to the Multi-View Stereo reconstruction community.
 8. [VCGlib](https://github.com/cnr-isti-vclab/vcglib): An open source, portable, header-only Visualization and Computer Graphics Library.
 9. [CGAL](): A C++ Computational Geometry Algorithms Library.
 
@@ -194,9 +203,9 @@ We are still working on improving the performance and reliability of our codes. 
 
 If you use any code of this repo in your academic research, please cite **at least one** of our papers:
 ```
-[1] Lin, Jiarong, and Fu Zhang. "R3LIVE: A Robust, Real-time, RGB-colored, LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping package." 
+[1] Lin, Jiarong, and Fu Zhang. "R3LIVE: A Robust, Real-time, RGB-colored, LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping package."
 [2] Xu, Wei, et al. "Fast-lio2: Fast direct lidar-inertial odometry."
-[3] Lin, Jiarong, et al. "R2LIVE: A Robust, Real-time, LiDAR-Inertial-Visual tightly-coupled state Estimator and mapping." 
+[3] Lin, Jiarong, et al. "R2LIVE: A Robust, Real-time, LiDAR-Inertial-Visual tightly-coupled state Estimator and mapping."
 [4] Xu, Wei, and Fu Zhang. "Fast-lio: A fast, robust lidar-inertial odometry package by tightly-coupled iterated kalman filter."
 [5] Cai, Yixi, Wei Xu, and Fu Zhang. "ikd-Tree: An Incremental KD Tree for Robotic Applications."
 [6] Lin, Jiarong, and Fu Zhang. "Loam-livox: A fast, robust, high-precision LiDAR odometry and mapping package for LiDARs of small FoV."

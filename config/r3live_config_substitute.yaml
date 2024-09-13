@@ -1,6 +1,7 @@
 /**:
   ros__parameters:
 
+   # Velodyne VLP-32C
    Lidar_front_end/lidar_type: 4   # 1 for Livox-avia, 3 for Ouster-OS1-64, 4 for VLP_32C
    Lidar_front_end/N_SCANS: 6 # Only used for horizon_handler
    Lidar_front_end/using_raw_point: 1

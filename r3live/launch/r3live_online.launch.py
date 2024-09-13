@@ -10,7 +10,7 @@ from launch_ros.actions import Node
 ### MANUAL SETTINGS
 # r3live_config_file = 'r3live_config_MPIR.yaml'
 r3live_config_file = 'r3live_config_gazebo_sim.yaml'
-# r3live_config_file = 'r3live_config_Logitech_c925e.yaml' # MPIR substitute
+# r3live_config_file = 'r3live_config_substitute.yaml' # MPIR substitute
 
 def generate_launch_description():
   # Subscribed topics
