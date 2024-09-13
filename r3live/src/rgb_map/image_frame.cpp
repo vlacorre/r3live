@@ -1,21 +1,21 @@
-/* 
-This code is the implementation of our paper "R3LIVE: A Robust, Real-time, RGB-colored, 
+/*
+This code is the implementation of our paper "R3LIVE: A Robust, Real-time, RGB-colored,
 LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping package".
 
 Author: Jiarong Lin   < ziv.lin.ljr@gmail.com >
 
 If you use any code of this repo in your academic research, please cite at least
 one of our papers:
-[1] Lin, Jiarong, and Fu Zhang. "R3LIVE: A Robust, Real-time, RGB-colored, 
-    LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping package." 
+[1] Lin, Jiarong, and Fu Zhang. "R3LIVE: A Robust, Real-time, RGB-colored,
+    LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping package."
 [2] Xu, Wei, et al. "Fast-lio2: Fast direct lidar-inertial odometry."
 [3] Lin, Jiarong, et al. "R2LIVE: A Robust, Real-time, LiDAR-Inertial-Visual
-     tightly-coupled state Estimator and mapping." 
-[4] Xu, Wei, and Fu Zhang. "Fast-lio: A fast, robust lidar-inertial odometry 
+     tightly-coupled state Estimator and mapping."
+[4] Xu, Wei, and Fu Zhang. "Fast-lio: A fast, robust lidar-inertial odometry
     package by tightly-coupled iterated kalman filter."
-[5] Cai, Yixi, Wei Xu, and Fu Zhang. "ikd-Tree: An Incremental KD Tree for 
+[5] Cai, Yixi, Wei Xu, and Fu Zhang. "ikd-Tree: An Incremental KD Tree for
     Robotic Applications."
-[6] Lin, Jiarong, and Fu Zhang. "Loam-livox: A fast, robust, high-precision 
+[6] Lin, Jiarong, and Fu Zhang. "Loam-livox: A fast, robust, high-precision
     LiDAR odometry and mapping package for LiDARs of small FoV."
 
 For commercial use, please contact me < ziv.lin.ljr@gmail.com > and
@@ -119,15 +119,6 @@ void Image_frame::init_cubic_interpolation()
 #endif
 }
 
-void Image_frame::inverse_pose()
-{
-    m_pose_w2c_t = -(m_pose_w2c_q.inverse() * m_pose_w2c_t);
-    m_pose_w2c_q = m_pose_w2c_q.inverse();
-    m_pose_w2c_R = m_pose_w2c_q.toRotationMatrix();
-
-    m_pose_c2w_q = m_pose_w2c_q.inverse();
-    m_pose_c2w_t = -(m_pose_w2c_q.inverse() * m_pose_w2c_t);
-}
 
 bool Image_frame::project_3d_to_2d(const pcl::PointXYZI & in_pt, Eigen::Matrix3d &cam_K, double &u, double &v, const double &scale)
 {
@@ -151,6 +142,7 @@ bool Image_frame::project_3d_to_2d(const pcl::PointXYZI & in_pt, Eigen::Matrix3d
     pt_cam = (m_pose_c2w_q * pt_w + m_pose_c2w_t);
     if (pt_cam(2) < 0.001)
     {
+      // std::cout << "pt_cam(2) < 0.001. RETURNING FALSE" << std::endl;
         return false;
     }
     u = (pt_cam(0) * fx / pt_cam(2) + cx) * scale;
@@ -172,6 +164,7 @@ bool Image_frame::if_2d_points_available(const double &u, const double &v, const
     }
     else
     {
+      // std::cout <<"'if_2d_points_available()' returned false." << std::endl;
         return false;
     }
 }
@@ -363,33 +356,4 @@ void Image_frame::dump_pose_and_image(const std::string name_prefix)
         fclose(fp);
     }
     cv::imwrite(image_file_name, m_img);
-}
-
-int Image_frame::load_pose_and_image(const std::string name_prefix, const double image_scale, int if_load_image)
-{
-    // cout << "Load data from " << name_prefix << ".X" << endl;
-    std::string txt_file_name = std::string(name_prefix).append(".txt");
-    std::string image_file_name = std::string(name_prefix).append(".png");
-    Eigen::MatrixXd pose_data = Common_tools::load_mat_from_txt<double>(txt_file_name);
-    if (pose_data.size() == 0)
-    {
-        // cout << "Load offline data return fail." << endl;
-        return 0;
-    }
-    // cout << "Pose data = " << pose_data << endl;
-    m_pose_w2c_q = Eigen::Quaterniond(pose_data(0), pose_data(1), pose_data(2), pose_data(3));
-    if (if_load_image)
-    {
-        m_img = cv::imread(image_file_name.c_str());
-        if (image_scale != 1.0)
-        {
-            cv::resize(m_img, m_img, cv::Size(0, 0), image_scale, image_scale);
-        }
-        m_img_rows = m_img.rows;
-        m_img_cols = m_img.cols;
-    }
-    // m_pose_w2c_q = Eigen::Map<Eigen::Quaterniond>(&pose_data.data()[0]);
-    m_pose_w2c_R = m_pose_w2c_q.toRotationMatrix();
-    m_pose_w2c_t = Eigen::Map<Eigen::Vector3d>(&pose_data.data()[4]);
-    return 1;
 }

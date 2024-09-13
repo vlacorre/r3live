@@ -1,21 +1,21 @@
-/* 
-This code is the implementation of our paper "R3LIVE: A Robust, Real-time, RGB-colored, 
+/*
+This code is the implementation of our paper "R3LIVE: A Robust, Real-time, RGB-colored,
 LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping package".
 
 Author: Jiarong Lin   < ziv.lin.ljr@gmail.com >
 
 If you use any code of this repo in your academic research, please cite at least
 one of our papers:
-[1] Lin, Jiarong, and Fu Zhang. "R3LIVE: A Robust, Real-time, RGB-colored, 
-    LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping package." 
+[1] Lin, Jiarong, and Fu Zhang. "R3LIVE: A Robust, Real-time, RGB-colored,
+    LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping package."
 [2] Xu, Wei, et al. "Fast-lio2: Fast direct lidar-inertial odometry."
 [3] Lin, Jiarong, et al. "R2LIVE: A Robust, Real-time, LiDAR-Inertial-Visual
-     tightly-coupled state Estimator and mapping." 
-[4] Xu, Wei, and Fu Zhang. "Fast-lio: A fast, robust lidar-inertial odometry 
+     tightly-coupled state Estimator and mapping."
+[4] Xu, Wei, and Fu Zhang. "Fast-lio: A fast, robust lidar-inertial odometry
     package by tightly-coupled iterated kalman filter."
-[5] Cai, Yixi, Wei Xu, and Fu Zhang. "ikd-Tree: An Incremental KD Tree for 
+[5] Cai, Yixi, Wei Xu, and Fu Zhang. "ikd-Tree: An Incremental KD Tree for
     Robotic Applications."
-[6] Lin, Jiarong, and Fu Zhang. "Loam-livox: A fast, robust, high-precision 
+[6] Lin, Jiarong, and Fu Zhang. "Loam-livox: A fast, robust, high-precision
     LiDAR odometry and mapping package for LiDARs of small FoV."
 
 For commercial use, please contact me < ziv.lin.ljr@gmail.com > and
@@ -98,11 +98,12 @@ class Rgbmap_tracker
     {
         cv::eigen2cv( cam_K, m_intrinsic );
         cv::eigen2cv( dist, m_dist_coeffs );
-        initUndistortRectifyMap( m_intrinsic, m_dist_coeffs, cv::Mat(), m_intrinsic, imageSize, CV_16SC2, m_ud_map1, m_ud_map2 );
+        cv::initUndistortRectifyMap( m_intrinsic, m_dist_coeffs, cv::Mat(), m_intrinsic, imageSize, CV_16SC2, m_ud_map1, m_ud_map2 );
     }
 
     void update_last_tracking_vector_and_ids()
     {
+      // std::cout << "update_last_tracking_vector_and_ids: m_map_rgb_pts_in_last_frame_pos.size() = " << m_map_rgb_pts_in_last_frame_pos.size() << std::endl;
         int idx = 0;
         m_last_tracked_pts.clear();
         m_rgb_pts_ptr_vec_in_last_frame.clear();
@@ -123,11 +124,15 @@ class Rgbmap_tracker
         m_old_frame = img.clone();
         cv::cvtColor( m_old_frame, m_old_gray, cv::COLOR_BGR2GRAY );
         m_map_rgb_pts_in_last_frame_pos.clear();
+                    // std::cout << "rgb_pts_vec.size() = " << rgb_pts_vec.size() << std::endl;
         for ( unsigned int i = 0; i < rgb_pts_vec.size(); i++ )
         {
+                    // std::cout << "Adding in function set_track_pts" << std::endl;
             m_map_rgb_pts_in_last_frame_pos[ ( void * ) rgb_pts_vec[ i ].get() ] = pts_proj_img_vec[ i ];
         }
         update_last_tracking_vector_and_ids();
+        // std::cout << "set_track_pts: m_last_tracked_pts.size() = " << m_last_tracked_pts.size() << std::endl;
+
     }
 
     void init( const std::shared_ptr< Image_frame > &img_with_pose, std::vector< std::shared_ptr< RGB_pts > > &rgb_pts_vec, std::vector< cv::Point2f > &pts_proj_img_vec )

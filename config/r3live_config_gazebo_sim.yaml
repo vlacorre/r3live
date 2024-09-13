@@ -1,0 +1,65 @@
+/**:
+  ros__parameters:
+   Lidar_front_end/lidar_type: 4   # 1 for Livox-avia, 3 for Ouster-OS1-64, 4 for VLP_32C
+   Lidar_front_end/N_SCANS: 6 # Only used for horizon_handler
+   Lidar_front_end/using_raw_point: 1
+   Lidar_front_end/point_step: 1
+
+   # LiDAR to IMU extrinsic
+   Lidar_front_end/lidar2imu_R:
+         [1.0, 0.0, 0.0,
+          0.0, 1.0, 0.0,
+          0.0, 0.0, 1.0 ]
+   Lidar_front_end/lidar2imu_t: [0.17,0.06,-0.31] # movement to do to move the LiDAR to the IMU position (From the point of view of the LiDAR's frame)
+  #  Lidar_front_end/lidar2imu_t: [-0.17,-0.06, 0.31] # Coordinates of LiDAR in the IMU frame
+
+   # IMPORTANT: /LiDAR_pointcloud_topic should not be modified. LiDAR_front_end will publish the pointcloud to this topic.
+   # Instead, modify this topic:
+   Lidar_front_end/PC_topic: "/vlp_32c_lidar/points"
+
+   r3live_common/record_offline_map: 1            # If recording offline map. [default = 1]
+   r3live_common/pub_pt_minimum_views: 3          # Publish points which have been render up to "pub_pt_minimum_views" time. [default = 3]
+   r3live_common/minimum_pts_size: 0.01           # The minimum distance for every two points in Global map (unit in meter). [default = 0.01]
+   r3live_common/image_downsample_ratio: 1.0        # The downsample ratio of the input image. [default = 1]
+   r3live_common/estimate_i2c_extrinsic: 1        # If enable estimate the extrinsic between camera and IMU. [default = 1]
+   r3live_common/estimate_intrinsic: 1            # If enable estimate the online intrinsic calibration of the camera lens. [default = 1]
+   r3live_common/maximum_vio_tracked_pts: 600     # The maximum points for tracking. [default = 600]
+   r3live_common/append_global_map_point_step: 4  # The point step of append point to global map. [default = 4]
+
+
+   r3live_common/IMU_topic: "/livox/imu"
+   r3live_common/Image_topic: "/camera/image_color"
+
+   r3live_vio/image_width: 848
+   r3live_vio/image_height: 480
+   r3live_vio/camera_intrinsic:
+      [615.9603271484375, 0.0, 419.83026123046875,
+      0.0,  616.227294921875, 245.14314270019531,
+      0.0, 0.0, 1.0 ]
+   r3live_vio/camera_dist_coeffs: [0.0, 0.0, 0.0, 0.0, 0.0]  #k1, k2, p1, p2, k3
+
+   # [Extrinsic from IMU to Camera] (LiDAR and IMU are superposated by default, but I added a transform in LiDAR_front_end.cpp)
+   r3live_vio/camera_ext_R:
+         [ 0.0,  0.0,  1.0,
+          -1.0,  0.0,  0.0,
+           0.0, -1.0,  0.0]
+  #  r3live_vio/camera_ext_R:
+  #        [1.0, 0.0, 0.0,
+  #         0.0, 1.0, 0.0,
+  #         0.0, 0.0, 1.0]
+   r3live_vio/camera_ext_t: [-0.045,0.06,-0.01] # movement to do to move the camera to the IMU position (From the point of view of the camera's frame)
+  #  r3live_vio/camera_ext_t: [0.045,-0.06,0.01] # Coordinates of camera in the IMU frame
+
+   #    [0, 0, 1,
+   #     -1, 0, 0,
+   #     0, -1, 0]
+
+   # [0.0,0.0,0.0]
+
+   r3live_lio/lio_update_point_step: 4   # Point step used for LIO update.
+   r3live_lio/max_iteration: 2           # Maximum times of LIO esikf.
+   r3live_lio/lidar_time_delay: 0.01        # The time-offset between LiDAR and IMU, provided by user. (in seconds))
+   r3live_lio/filter_size_corner: 0.30
+   r3live_lio/filter_size_surf: 0.30
+   r3live_lio/filter_size_surf_z: 0.30
+   r3live_lio/filter_size_map: 0.3

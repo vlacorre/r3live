@@ -5,15 +5,15 @@
 #include <Eigen/Eigen>
 #include <pcl/point_types.h>
 #include <pcl/point_cloud.h>
-#include <sensor_msgs/Imu.h>
-#include <sensor_msgs/Imu.h>
-#include <sensor_msgs/PointCloud2.h>
-#include <sensor_msgs/PointCloud.h>
-#include <nav_msgs/Odometry.h>
-#include <rosbag/bag.h>
+#include <sensor_msgs/msg/imu.hpp>
+#include <sensor_msgs/msg/imu.hpp>
+#include <sensor_msgs/msg/point_cloud2.hpp>
+#include <sensor_msgs/msg/point_cloud.hpp>
+#include <nav_msgs/msg/odometry.hpp>
 
-#include <tf/transform_broadcaster.h>
-#include <eigen_conversions/eigen_msg.h>
+// #include <tf/transform_broadcaster.h>
+
+// #include <eigen_conversions/eigen_msg.h>
 #include "tools_color_printf.hpp"
 #include "tools_eigen.hpp"
 #include "tools_ros.hpp"
@@ -85,7 +85,7 @@ inline Eigen::Matrix<T, 3, 3> vec_to_hat(Eigen::Matrix<T, 3, 1> &omega)
     return res_mat_33;
 }
 
-template < typename T = double > 
+template < typename T = double >
 T cot(const T theta)
 {
     return 1.0 / std::tan(theta);
@@ -103,7 +103,7 @@ inline Eigen::Matrix< T, 3, 3 > right_jacobian_of_rotion_matrix(const Eigen::Mat
     Eigen::Matrix< T, 3, 1 > a = omega/ theta;
     Eigen::Matrix< T, 3, 3 > hat_a = vec_to_hat(a);
     res_mat_33 = sin(theta)/theta * Eigen::Matrix< T, 3, 3 >::Identity()
-                    + (1 - (sin(theta)/theta))*a*a.transpose() 
+                    + (1 - (sin(theta)/theta))*a*a.transpose()
                     + ((1 - cos(theta))/theta)*hat_a;
     // cout << "Omega: " << omega.transpose() << endl;
     // cout << "Res_mat_33:\r\n"  <<res_mat_33 << endl;
@@ -121,8 +121,8 @@ Eigen::Matrix< T, 3, 3 > inverse_right_jacobian_of_rotion_matrix(const Eigen::Ma
         return Eigen::Matrix< T, 3, 3>::Identity();
     Eigen::Matrix< T, 3, 1 > a = omega/ theta;
     Eigen::Matrix< T, 3, 3 > hat_a = vec_to_hat(a);
-    res_mat_33 = (theta / 2) * (cot(theta / 2)) * Eigen::Matrix<T, 3, 3>::Identity() 
-                + (1 - (theta / 2) * (cot(theta / 2))) * a * a.transpose() 
+    res_mat_33 = (theta / 2) * (cot(theta / 2)) * Eigen::Matrix<T, 3, 3>::Identity()
+                + (1 - (theta / 2) * (cot(theta / 2))) * a * a.transpose()
                 + (theta / 2) * hat_a;
     // cout << "Omega: " << omega.transpose() << endl;
     // cout << "Res_mat_33:\r\n"  <<res_mat_33 << endl;
@@ -149,17 +149,16 @@ struct Camera_Lidar_queue
     Eigen::Vector3d g_noise_cov_acc;
     Eigen::Vector3d g_noise_cov_gyro;
 
-    std::string m_bag_file_name;
     int m_if_dump_log = 1;
 
-    // std::vector<std::pair<std::vector<sensor_msgs::ImuConstPtr>, sensor_msgs::PointCloudConstPtr>> *m_camera_frame_buf = nullptr;
-    std::deque<sensor_msgs::PointCloud2::ConstPtr> *m_liar_frame_buf = nullptr;
+    // std::vector<std::pair<std::vector<sensor_msgs::msg::Imu::ConstSharedPtr>, sensor_msgs::msg::PointCloud::ConstSharedPtr>> *m_camera_frame_buf = nullptr;
+    std::deque<sensor_msgs::msg::PointCloud2::ConstSharedPtr> *m_lidar_frame_buf = nullptr;
 
     double time_wrt_first_imu_time(double & time)
     {
         return time - m_first_imu_time;
     }
-    
+
     Camera_Lidar_queue()
     {
         m_if_have_lidar_data = 0;
@@ -207,9 +206,9 @@ struct Camera_Lidar_queue
 
     double get_lidar_front_time()
     {
-        if (m_liar_frame_buf != nullptr && m_liar_frame_buf->size())
+        if (m_lidar_frame_buf != nullptr && m_lidar_frame_buf->size())
         {
-            m_last_lidar_time = m_liar_frame_buf->front()->header.stamp.toSec() + 0.1;
+            m_last_lidar_time = rclcpp::Time(m_lidar_frame_buf->front()->header.stamp).seconds() + 0.1;
             return m_last_lidar_time;
         }
         else
@@ -259,7 +258,7 @@ struct Camera_Lidar_queue
         double cam_last_time = get_camera_front_time();
         double lidar_last_time = get_lidar_front_time();
         scope_color(ANSI_COLOR_GREEN_BOLD);
-        cout<< std::setprecision(15) <<  "Camera time = " << cam_last_time << ", LiDAR last time =  "<< lidar_last_time << endl;        
+        cout<< std::setprecision(15) <<  "Camera time = " << cam_last_time << ", LiDAR last time =  "<< lidar_last_time << endl;
     }
 
     bool if_lidar_can_process()
@@ -274,7 +273,7 @@ struct Camera_Lidar_queue
 
         if (cam_last_time < 0 || lidar_last_time < 0)
         {
-            // cout << "Cam_tim = " << cam_last_time << ", lidar_last_time = " << lidar_last_time << endl; 
+            // cout << "Cam_tim = " << cam_last_time << ", lidar_last_time = " << lidar_last_time << endl;
             return false;
         }
 
@@ -304,7 +303,7 @@ struct MeasureGroup // Lidar data and imu dates for the curent process
     double lidar_beg_time;
     double lidar_end_time;
     PointCloudXYZINormal::Ptr lidar;
-    std::deque<sensor_msgs::Imu::ConstPtr> imu;
+    std::deque<sensor_msgs::msg::Imu::ConstSharedPtr> imu;
 };
 
 struct StatesGroup
@@ -365,7 +364,7 @@ public:
 
         a.cov = this->cov;
         a.last_update_time = this->last_update_time;
-#if ENABLE_CAMERA_OBS                
+#if ENABLE_CAMERA_OBS
         //Ext camera w.r.t. IMU
         a.rot_ext_i2c = this->rot_ext_i2c * Exp(  state_add(18), state_add(19), state_add(20) );
         a.pos_ext_i2c = this->pos_ext_i2c + state_add.block<3,1>( 21, 0 );
@@ -385,12 +384,12 @@ public:
 #if ESTIMATE_GRAVITY
         this->gravity += state_add.block<3, 1>(15, 0);
 #endif
-#if ENABLE_CAMERA_OBS        
+#if ENABLE_CAMERA_OBS
         //Ext camera w.r.t. IMU
         this->rot_ext_i2c = this->rot_ext_i2c * Exp(  state_add(18), state_add(19), state_add(20));
         this->pos_ext_i2c = this->pos_ext_i2c + state_add.block<3,1>( 21, 0 );
         this->td_ext_i2c_delta = this->td_ext_i2c_delta + state_add(24);
-        this->cam_intrinsic = this->cam_intrinsic + state_add.block(25, 0, 4, 1);   
+        this->cam_intrinsic = this->cam_intrinsic + state_add.block(25, 0, 4, 1);
 #endif
         return *this;
     }
@@ -406,7 +405,7 @@ public:
         a.block<3, 1>(12, 0) = this->bias_a - b.bias_a;
         a.block<3, 1>(15, 0) = this->gravity - b.gravity;
 
-#if ENABLE_CAMERA_OBS    
+#if ENABLE_CAMERA_OBS
         //Ext camera w.r.t. IMU
         Eigen::Matrix3d rotd_ext_i2c(b.rot_ext_i2c.transpose() * this->rot_ext_i2c);
         a.block<3, 1>(18, 0) = SO3_LOG(rotd_ext_i2c);

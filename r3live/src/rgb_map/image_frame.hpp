@@ -1,21 +1,21 @@
-/* 
-This code is the implementation of our paper "R3LIVE: A Robust, Real-time, RGB-colored, 
+/*
+This code is the implementation of our paper "R3LIVE: A Robust, Real-time, RGB-colored,
 LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping package".
 
 Author: Jiarong Lin   < ziv.lin.ljr@gmail.com >
 
 If you use any code of this repo in your academic research, please cite at least
 one of our papers:
-[1] Lin, Jiarong, and Fu Zhang. "R3LIVE: A Robust, Real-time, RGB-colored, 
-    LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping package." 
+[1] Lin, Jiarong, and Fu Zhang. "R3LIVE: A Robust, Real-time, RGB-colored,
+    LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping package."
 [2] Xu, Wei, et al. "Fast-lio2: Fast direct lidar-inertial odometry."
 [3] Lin, Jiarong, et al. "R2LIVE: A Robust, Real-time, LiDAR-Inertial-Visual
-     tightly-coupled state Estimator and mapping." 
-[4] Xu, Wei, and Fu Zhang. "Fast-lio: A fast, robust lidar-inertial odometry 
+     tightly-coupled state Estimator and mapping."
+[4] Xu, Wei, and Fu Zhang. "Fast-lio: A fast, robust lidar-inertial odometry
     package by tightly-coupled iterated kalman filter."
-[5] Cai, Yixi, Wei Xu, and Fu Zhang. "ikd-Tree: An Incremental KD Tree for 
+[5] Cai, Yixi, Wei Xu, and Fu Zhang. "ikd-Tree: An Incremental KD Tree for
     Robotic Applications."
-[6] Lin, Jiarong, and Fu Zhang. "Loam-livox: A fast, robust, high-precision 
+[6] Lin, Jiarong, and Fu Zhang. "Loam-livox: A fast, robust, high-precision
     LiDAR odometry and mapping package for LiDARs of small FoV."
 
 For commercial use, please contact me < ziv.lin.ljr@gmail.com > and
@@ -123,7 +123,7 @@ inline cv::Mat img_merge_with_depth(cv::Mat raw_img, cv::Mat depth_mat, float ra
 {
     cv::Mat res_img = raw_img.clone();
     cv::Mat cImg = colormap_depth_img( depth_mat);
-   
+
     for( int i = 0; i < depth_mat.rows; i++)
     {
         for( int j = 0; j < depth_mat.cols; j++)
@@ -166,7 +166,7 @@ struct Image_frame
     int m_have_solved_pnp = 0;
     eigen_q m_pnp_pose_w2c_q = eigen_q::Identity();
     vec_3 m_pnp_pose_w2c_t = vec_3(0,0,0);
-    
+
     vec_3 m_pose_t;
     mat_3_3 m_pose_w2c_R;
     int m_img_rows = 0;
@@ -182,8 +182,8 @@ struct Image_frame
     cv::Mat m_img_gray;
 
     double m_fov_margin = 0.005;
-    
-    Image_frame();   
+
+    Image_frame();
     ~Image_frame();
     void refresh_pose_for_projection();
     void set_pose(const eigen_q & pose_w2c_q, const vec_3 & pose_w2c_t );
@@ -191,7 +191,6 @@ struct Image_frame
     void set_intrinsic(Eigen::Matrix3d & camera_K);
     Image_frame(Eigen::Matrix3d &camera_K);
     void init_cubic_interpolation();
-    void inverse_pose();    
     void release_image();
     bool project_3d_to_2d( const pcl::PointXYZI & in_pt, Eigen::Matrix3d & cam_K, double &u, double &v, const double  & scale = 1.0);
     bool if_2d_points_available(const double &u, const double &v, const double &scale = 1.0, double fov_mar = -1.0);
@@ -204,7 +203,6 @@ struct Image_frame
     bool project_3d_point_in_this_img(const pcl::PointXYZI & in_pt, double &u, double &v,   pcl::PointXYZRGB * rgb_pt = nullptr, double intrinsic_scale = 1.0);
     bool project_3d_point_in_this_img(const vec_3 & in_pt, double &u, double &v, pcl::PointXYZRGB *rgb_pt = nullptr, double intrinsic_scale = 1.0);
     void dump_pose_and_image( const std::string name_prefix );
-    int load_pose_and_image( const std::string name_prefix, const double image_scale = 1.0, int if_load_image = 1 );
 
   private:
     friend class boost::serialization::access;

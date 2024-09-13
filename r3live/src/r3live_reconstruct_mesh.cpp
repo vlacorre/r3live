@@ -1,21 +1,21 @@
-/* 
-This code is the implementation of our paper "R3LIVE: A Robust, Real-time, RGB-colored, 
+/*
+This code is the implementation of our paper "R3LIVE: A Robust, Real-time, RGB-colored,
 LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping package".
 
 Author: Jiarong Lin   < ziv.lin.ljr@gmail.com >
 
 If you use any code of this repo in your academic research, please cite at least
 one of our papers:
-[1] Lin, Jiarong, and Fu Zhang. "R3LIVE: A Robust, Real-time, RGB-colored, 
-    LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping package." 
+[1] Lin, Jiarong, and Fu Zhang. "R3LIVE: A Robust, Real-time, RGB-colored,
+    LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping package."
 [2] Xu, Wei, et al. "Fast-lio2: Fast direct lidar-inertial odometry."
 [3] Lin, Jiarong, et al. "R2LIVE: A Robust, Real-time, LiDAR-Inertial-Visual
-     tightly-coupled state Estimator and mapping." 
-[4] Xu, Wei, and Fu Zhang. "Fast-lio: A fast, robust lidar-inertial odometry 
+     tightly-coupled state Estimator and mapping."
+[4] Xu, Wei, and Fu Zhang. "Fast-lio: A fast, robust lidar-inertial odometry
     package by tightly-coupled iterated kalman filter."
-[5] Cai, Yixi, Wei Xu, and Fu Zhang. "ikd-Tree: An Incremental KD Tree for 
+[5] Cai, Yixi, Wei Xu, and Fu Zhang. "ikd-Tree: An Incremental KD Tree for
     Robotic Applications."
-[6] Lin, Jiarong, and Fu Zhang. "Loam-livox: A fast, robust, high-precision 
+[6] Lin, Jiarong, and Fu Zhang. "Loam-livox: A fast, robust, high-precision
     LiDAR odometry and mapping package for LiDARs of small FoV."
 
 For commercial use, please contact me < ziv.lin.ljr@gmail.com > and
@@ -174,7 +174,7 @@ void r3live_map_to_mvs_scene( Offline_map_recorder &r3live_map_recorder, MVS::Im
     long temp_int = 0;
     if(pcl_pc_rgb == nullptr)
     {
-        pcl_pc_rgb = boost::make_shared<pcl::PointCloud<PointType>>();
+        pcl_pc_rgb = std::make_shared<pcl::PointCloud<PointType>>();
     }
     pcl_pc_rgb->clear();
     pcl_pc_rgb->reserve(1e8);
@@ -231,7 +231,7 @@ void build_pcl_kdtree( Offline_map_recorder &r3live_map_recorder )
 {
     if ( pcl_pc_rgb == nullptr )
     {
-        pcl_pc_rgb = boost::make_shared< pcl::PointCloud< PointType > >();
+        pcl_pc_rgb = std::make_shared< pcl::PointCloud< PointType > >();
     }
     if ( 1 ) // if reload all pts.
     {
@@ -240,9 +240,9 @@ void build_pcl_kdtree( Offline_map_recorder &r3live_map_recorder )
         for ( int i = 0; i < r3live_map_recorder.m_global_map->m_rgb_pts_vec.size(); i++ )
         {
             PointType  pcl_pt;
-            
+
             RGB_pt_ptr rgb_pt = r3live_map_recorder.m_global_map->m_rgb_pts_vec[ i ];
-            if(rgb_pt->m_N_rgb < 5) 
+            if(rgb_pt->m_N_rgb < 5)
             {
                 continue;
             }
@@ -268,16 +268,16 @@ void reconstruct_mesh( Offline_map_recorder &r3live_map_recorder, std::string ou
 
     r3live_map_to_mvs_scene( r3live_map_recorder, m_images, m_pointcloud );
     // return;
-    
+
     ReconstructMesh( g_insert_pt_dis, g_if_use_free_space_support, 4, g_thickness_factor, g_quality_factor, reconstructed_mesh, m_images, m_pointcloud );
     printf( "Mesh reconstruction completed: %u vertices, %u faces\n", reconstructed_mesh.vertices.GetSize(), reconstructed_mesh.faces.GetSize() );
-    
+
     cout << "Clean mesh [1/3]: ";
     reconstructed_mesh.Clean( g_decimate_mesh, g_if_remove_spurious, g_if_remove_spikes, g_close_holes_dist, g_smooth_mesh_factor, false );
-    
+
     cout << "Clean mesh [2/3]: ";
     reconstructed_mesh.Clean( 1.f, 0.f, g_if_remove_spikes, g_close_holes_dist, 0, false ); // extra cleaning trying to close more holes
-    
+
     cout << "Clean mesh [3/3]: ";
     reconstructed_mesh.Clean( 1.f, 0.f, false, 0, 0, true ); // extra cleaning to
                                                              // remove non-manifold
@@ -348,12 +348,12 @@ void texture_mesh(  Offline_map_recorder &r3live_map_recorder, std::string input
     cout << "=== Mesh texturing finish ! ===" << endl;
 }
 
-void load_parameter(ros::NodeHandle & m_ros_node_handle )
+void load_parameter(std::shared_ptr<rclcpp::Node> & m_ros_node_handle )
 {
     std::string _offline_map_name;
     Common_tools::get_ros_parameter( m_ros_node_handle, "add_keyframe_R", g_add_keyframe_R, 10.0 );
     Common_tools::get_ros_parameter( m_ros_node_handle, "add_keyframe_t", g_add_keyframe_t, 0.15 );
-   
+
     Common_tools::get_ros_parameter( m_ros_node_handle, "insert_pt_dis", g_insert_pt_dis, 1.0 );
     Common_tools::get_ros_parameter( m_ros_node_handle, "if_use_free_space_support", g_if_use_free_space_support, false );
     Common_tools::get_ros_parameter( m_ros_node_handle, "thickness_factor", g_thickness_factor, 1.0 );
@@ -375,8 +375,9 @@ int main( int argc, char **argv )
     // system( "clear" );
     printf_program( "R3LIVE_meshing" );
     Common_tools::printf_software_version();
-    ros::init( argc, argv, "R3LIVE_meshing" );
-    ros::NodeHandle m_ros_node_handle;
+    // ros::init( argc, argv, "R3LIVE_meshing" );
+    rclcpp::init(argc, argv);
+    std::shared_ptr<rclcpp::Node> m_ros_node_handle = rclcpp::Node::make_shared("R3LIVE_meshing");
     load_parameter( m_ros_node_handle );
 
     Global_map       global_map( 0 );
@@ -384,9 +385,9 @@ int main( int argc, char **argv )
     cout << "Open file from: " << g_offline_map_name << endl;
     global_map.m_if_reload_init_voxel_and_hashed_pts = 0;
     r3live_map_recorder.m_global_map = &global_map;
-    
+
     Common_tools::load_obj_from_file( &r3live_map_recorder, g_offline_map_name );
-    
+
     cout << "Number of rgb points: " << global_map.m_rgb_pts_vec.size() << endl;
     cout << "Size of frames: " << r3live_map_recorder.m_image_pose_vec.size() << endl;
     reconstruct_mesh( r3live_map_recorder, g_working_dir );

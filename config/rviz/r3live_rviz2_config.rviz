@@ -1,5 +1,5 @@
 Panels:
-  - Class: rviz/Displays
+  - Class: rviz_common/Displays
     Help Height: 0
     Name: Displays
     Property Tree Widget:
@@ -10,20 +10,21 @@ Panels:
         - /LIO1/PointCloud21
         - /LIO1/current_scan1
         - /LIO1/Path1
+        - /LIO1/Odometry2
         - /LIO1/Odometry2/Shape1
         - /RGB_map1/PointCloud21
         - /RGB_map1/PointCloud22
         - /RGB_map1/PointCloud23
       Splitter Ratio: 0.4651159942150116
-    Tree Height: 902
-  - Class: rviz/Selection
+    Tree Height: 400
+  - Class: rviz_common/Selection
     Name: Selection
-  - Class: rviz/Time
+  - Class: rviz_common/Time
     Experimental: false
     Name: Time
     SyncMode: 0
     SyncSource: feature_map
-  - Class: rviz/Displays
+  - Class: rviz_common/Displays
     Help Height: 138
     Name: Displays
     Property Tree Widget:
@@ -41,22 +42,18 @@ Panels:
         - /RGB_map1/PointCloud260
       Splitter Ratio: 0.5
     Tree Height: 303
-  - Class: rviz/Views
+  - Class: rviz_common/Views
     Expanded:
       - /Current View1
       - /Orbit1
     Name: Views
     Splitter Ratio: 0.5
-Preferences:
-  PromptSaveOnExit: true
-Toolbars:
-  toolButtonStyle: 2
 Visualization Manager:
   Class: ""
   Displays:
     - Alpha: 0.5
       Cell Size: 1
-      Class: rviz/Grid
+      Class: rviz_default_plugins/Grid
       Color: 130; 130; 130
       Enabled: false
       Line Style:
@@ -72,14 +69,14 @@ Visualization Manager:
       Plane Cell Count: 1000
       Reference Frame: <Fixed Frame>
       Value: false
-    - Class: rviz/Axes
+    - Class: rviz_default_plugins/Axes
       Enabled: false
       Length: 1
       Name: Axes
       Radius: 0.10000000149011612
       Reference Frame: <Fixed Frame>
       Value: false
-    - Class: rviz/Group
+    - Class: rviz_common/Group
       Displays:
         - Alpha: 1
           Autocompute Intensity Bounds: true
@@ -89,23 +86,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 0
           Color Transformer: FlatColor
           Decay Time: 0
           Enabled: false
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 3
           Size (m): 0.10000000149011612
           Style: Flat Squares
-          Topic: /cloud_effected
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /cloud_effected
           Use Fixed Frame: true
           Use rainbow: true
           Value: false
@@ -117,23 +120,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: AxisColor
           Decay Time: 100000
           Enabled: false
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: pointcloud_map
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: false
           Size (Pixels): 1.5
           Size (m): 0.009999999776482582
           Style: Points
-          Topic: /cloud_registered
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /cloud_registered
           Use Fixed Frame: true
           Use rainbow: true
           Value: false
@@ -145,23 +154,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: FlatColor
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: current_scan
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 5
           Size (m): 1
           Style: Points
-          Topic: /cloud_registered
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /cloud_registered
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -173,36 +188,42 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: FlatColor
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: feature_map
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.10000000149011612
           Style: Points
-          Topic: /Laser_map
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /Laser_map
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
         - Alpha: 1
           Buffer Length: 1
-          Class: rviz/Path
-          Color: 255; 255; 255
+          Class: rviz_default_plugins/Path
+          Color: 192; 97; 203
           Enabled: true
           Head Diameter: 0.30000001192092896
           Head Length: 0.20000000298023224
           Length: 0.30000001192092896
           Line Style: Billboards
-          Line Width: 0.20000000298023224
+          Line Width: 0.05000000074505806
           Name: Path
           Offset:
             X: 0
@@ -213,11 +234,16 @@ Visualization Manager:
           Radius: 0.029999999329447746
           Shaft Diameter: 0.10000000149011612
           Shaft Length: 0.10000000149011612
-          Topic: /path
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /path
           Value: true
         - Angle Tolerance: 0.009999999776482582
-          Class: rviz/Odometry
+          Class: rviz_default_plugins/Odometry
           Covariance:
             Orientation:
               Alpha: 0.5
@@ -247,11 +273,16 @@ Visualization Manager:
             Shaft Length: 1
             Shaft Radius: 0.05000000074505806
             Value: Axes
-          Topic: /r2live/odometry
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /r2live/odometry
           Value: true
         - Angle Tolerance: 0.0010000000474974513
-          Class: rviz/Odometry
+          Class: rviz_default_plugins/Odometry
           Covariance:
             Orientation:
               Alpha: 0.5
@@ -273,21 +304,26 @@ Visualization Manager:
           Position Tolerance: 0.0010000000474974513
           Shape:
             Alpha: 1
-            Axes Length: 1
-            Axes Radius: 0.30000001192092896
+            Axes Length: 0.5
+            Axes Radius: 0.10000000149011612
             Color: 255; 25; 0
             Head Length: 0.30000001192092896
             Head Radius: 0.10000000149011612
             Shaft Length: 1
             Shaft Radius: 0.05000000074505806
             Value: Axes
-          Topic: /aft_mapped_to_init
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /aft_mapped_to_init
           Value: true
       Enabled: true
       Name: LIO
     - Angle Tolerance: 0.10000000149011612
-      Class: rviz/Odometry
+      Class: rviz_default_plugins/Odometry
       Covariance:
         Orientation:
           Alpha: 0.5
@@ -317,12 +353,17 @@ Visualization Manager:
         Shaft Length: 1
         Shaft Radius: 0.05000000074505806
         Value: Axes
-      Topic: /camera_odom
-      Unreliable: false
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /camera_odom
       Value: false
     - Alpha: 1
       Buffer Length: 1
-      Class: rviz/Path
+      Class: rviz_default_plugins/Path
       Color: 25; 255; 0
       Enabled: false
       Head Diameter: 0.30000001192092896
@@ -340,8 +381,13 @@ Visualization Manager:
       Radius: 0.029999999329447746
       Shaft Diameter: 0.10000000149011612
       Shaft Length: 0.10000000149011612
-      Topic: /camera_path
-      Unreliable: false
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /camera_path
       Value: false
     - Alpha: 1
       Autocompute Intensity Bounds: true
@@ -351,27 +397,33 @@ Visualization Manager:
         Value: true
       Axis: Z
       Channel Name: intensity
-      Class: rviz/PointCloud2
+      Class: rviz_default_plugins/PointCloud2
       Color: 50; 0; 255
       Color Transformer: RGB8
       Decay Time: 0
       Enabled: false
       Invert Rainbow: false
       Max Color: 255; 255; 255
+      Max Intensity: 4096
       Min Color: 0; 0; 0
+      Min Intensity: 0
       Name: track_pts
       Position Transformer: XYZ
-      Queue Size: 10
       Selectable: true
       Size (Pixels): 1.5
       Size (m): 0.30000001192092896
       Style: Spheres
-      Topic: /track_pts
-      Unreliable: false
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        Filter size: 10
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /track_pts
       Use Fixed Frame: true
       Use rainbow: true
       Value: false
-    - Class: rviz/Group
+    - Class: rviz_common/Group
       Displays:
         - Alpha: 1
           Autocompute Intensity Bounds: true
@@ -381,23 +433,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_0
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_0
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -409,23 +467,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_1
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_1
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -437,23 +501,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_2
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_2
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -465,23 +535,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_3
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_3
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -493,23 +569,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_4
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_4
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -521,23 +603,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_5
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_5
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -549,23 +637,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_6
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_6
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -577,23 +671,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_7
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_7
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -605,23 +705,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_8
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_8
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -633,23 +739,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_9
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_9
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -661,23 +773,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_10
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_10
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -689,23 +807,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_11
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_11
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -717,23 +841,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_12
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_12
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -745,23 +875,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_13
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_13
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -773,23 +909,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_14
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_14
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -801,23 +943,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_15
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_15
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -829,23 +977,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_16
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_16
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -857,23 +1011,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_17
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_17
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -885,23 +1045,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_18
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_18
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -913,23 +1079,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_19
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_19
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -941,23 +1113,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_20
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_20
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -969,23 +1147,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_21
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_21
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -997,23 +1181,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_22
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_22
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1025,23 +1215,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_23
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_23
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1053,23 +1249,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_24
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_24
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1081,23 +1283,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_25
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_25
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1109,23 +1317,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_26
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_26
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1137,23 +1351,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_27
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_27
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1165,23 +1385,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_28
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_28
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1193,23 +1419,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_29
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_29
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1221,23 +1453,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_30
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_30
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1249,23 +1487,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_31
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_31
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1277,23 +1521,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_32
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_32
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1305,23 +1555,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_33
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_33
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1333,23 +1589,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_34
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_34
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1361,23 +1623,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_35
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_35
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1389,23 +1657,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_36
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_36
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1417,23 +1691,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_37
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_37
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1445,23 +1725,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_38
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_38
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1473,23 +1759,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_39
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_39
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1501,23 +1793,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_40
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_40
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1529,23 +1827,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_41
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_41
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1557,23 +1861,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_42
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_42
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1585,23 +1895,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_43
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_43
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1613,23 +1929,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_44
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_44
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1641,23 +1963,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_45
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_45
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1669,23 +1997,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_46
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_46
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1697,23 +2031,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_47
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_47
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1725,23 +2065,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_48
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_48
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1753,23 +2099,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_49
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_49
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1781,23 +2133,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_50
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_50
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1809,23 +2167,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_51
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_51
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1837,23 +2201,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_52
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_52
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1865,23 +2235,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_53
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_53
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1893,23 +2269,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_54
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_54
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1921,23 +2303,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_55
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_55
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1949,23 +2337,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_56
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_56
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -1977,23 +2371,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_57
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_57
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -2005,23 +2405,29 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_58
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_58
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
@@ -2033,88 +2439,116 @@ Visualization Manager:
             Value: true
           Axis: Z
           Channel Name: intensity
-          Class: rviz/PointCloud2
+          Class: rviz_default_plugins/PointCloud2
           Color: 255; 255; 255
           Color Transformer: RGB8
           Decay Time: 0
           Enabled: true
           Invert Rainbow: false
           Max Color: 255; 255; 255
+          Max Intensity: 4096
           Min Color: 0; 0; 0
+          Min Intensity: 0
           Name: PointCloud2
           Position Transformer: XYZ
-          Queue Size: 10
           Selectable: true
           Size (Pixels): 1.5
           Size (m): 0.05000000074505806
           Style: Points
-          Topic: /RGB_map_59
-          Unreliable: false
+          Topic:
+            Depth: 5
+            Durability Policy: Volatile
+            Filter size: 10
+            History Policy: Keep Last
+            Reliability Policy: Reliable
+            Value: /RGB_map_59
           Use Fixed Frame: true
           Use rainbow: true
           Value: true
       Enabled: true
       Name: RGB_map
-    - Class: rviz/Image
-      Enabled: false
-      Image Topic: /raw_in_img
+    - Class: rviz_default_plugins/Image
+      Enabled: true
       Max Value: 1
       Median window: 5
       Min Value: 0
       Name: Input image
       Normalize Range: true
-      Queue Size: 2
-      Transport Hint: raw
-      Unreliable: false
-      Value: false
-    - Class: rviz/Image
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /raw_in_img
+      Value: true
+    - Class: rviz_default_plugins/Image
       Enabled: true
-      Image Topic: /track_img
       Max Value: 1
       Median window: 5
       Min Value: 0
       Name: Tracked points
       Normalize Range: true
-      Queue Size: 2
-      Transport Hint: raw
-      Unreliable: false
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /track_img
       Value: true
   Enabled: true
   Global Options:
     Background Color: 0; 0; 0
-    Default Light: true
     Fixed Frame: world
     Frame Rate: 60
   Name: root
   Tools:
-    - Class: rviz/MoveCamera
-    - Class: rviz/Select
-    - Class: rviz/FocusCamera
-    - Class: rviz/Measure
-    - Class: rviz/SetInitialPose
-      Theta std deviation: 0.2617993950843811
-      Topic: /initialpose
-      X std deviation: 0.5
-      Y std deviation: 0.5
-    - Class: rviz/SetGoal
-      Topic: /move_base_simple/goal
-    - Class: rviz/PublishPoint
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/Select
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/Measure
+      Line color: 128; 128; 0
+    - Class: rviz_default_plugins/SetInitialPose
+      Covariance x: 0.25
+      Covariance y: 0.25
+      Covariance yaw: 0.06853891909122467
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /initialpose
+    - Class: rviz_default_plugins/SetGoal
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /move_base_simple/goal
+    - Class: rviz_default_plugins/PublishPoint
       Single click: true
-      Topic: /clicked_point
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /clicked_point
+  Transformation:
+    Current:
+      Class: rviz_default_plugins/TF
   Value: true
   Views:
     Current:
-      Class: rviz/Orbit
-      Distance: 51.10636901855469
+      Class: rviz_default_plugins/Orbit
+      Distance: 31.66962432861328
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 14.041913032531738
-        Y: -0.2787186801433563
-        Z: -14.1135892868042
+        X: 6.854259490966797
+        Y: -0.5519678592681885
+        Z: -16.997135162353516
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
@@ -2125,7 +2559,7 @@ Visualization Manager:
       Value: Orbit (rviz)
       Yaw: 2.944565534591675
     Saved:
-      - Class: rviz/ThirdPersonFollower
+      - Class: rviz_default_plugins/ThirdPersonFollower
         Distance: 2.466799259185791
         Enable Stereo Rendering:
           Stereo Eye Separation: 0.05999999865889549
@@ -2145,7 +2579,7 @@ Visualization Manager:
         Target Frame: aft_mapped
         Value: ThirdPersonFollower (rviz)
         Yaw: 3.13038969039917
-      - Class: rviz/Orbit
+      - Class: rviz_default_plugins/Orbit
         Distance: 10.964186668395996
         Enable Stereo Rendering:
           Stereo Eye Separation: 0.05999999865889549
@@ -2168,12 +2602,12 @@ Visualization Manager:
 Window Geometry:
   Displays:
     collapsed: false
-  Height: 2060
+  Height: 1016
   Hide Left Dock: false
   Hide Right Dock: true
   Input image:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd0000000400000000000004f0000007d9fc0200000019fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f0070006500720074006900650073020000050d0000039500000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000001200720061007700200049006d0061006700650000000028000000300000000000000000fb00000012007200610077005f0069006d0061006700650000000299000001680000000000000000fb0000000c00430061006d0065007200610000000000000002330000000000000000fb00000020006c006f006f0070005f006d0061007400630068005f0069006d0061006700650000000230000001380000000000000000fb0000000a0049006d00610067006500000000000000019d0000000000000000fb000000160049006e00700075007400200069006d00610067006500000000160000035a0000001600fffffffb000000220066006500610074007500720065007300200074007200610063006b0069006e006701000003ba0000028d0000000000000000fb0000000c00430061006d00650072006101000001e80000001d0000000000000000fb0000000a0049006d0061006700650100000416000004100000000000000000fb0000001c0054007200610063006b0065006400200070006f0069006e007400730100000016000004100000001600fffffffb000000100044006900730070006c006100790073010000042c000003c3000000c900fffffffb000000100044006900730070006c00610079007300000005950000035f000000c900fffffffc000000280000011e0000000000fffffffa000000000100000002fb0000001200720061007700200049006d0061006700650000000000ffffffff0000000000000000fb0000001a0074007200610063006b0065006400200069006d0061006700650100000000000002370000000000000000fb0000001000410052005f0069006d0061006700650100000373000000160000000000000000fb0000001200720061007700200069006d006100670065010000038f000000160000000000000000fb000000100044006900730070006c0061007900730100000427000003ff0000000000000000fb0000000c00430061006d006500720061010000059b0000028b0000000000000000fb0000000a0049006d0061006700650100000739000000ed0000000000000000000000010000020800000826fc0200000004fb0000000a00560069006500770073000000000000000826000000a400fffffffb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb000000100044006900730070006c006100790073000000040a0000041c0000000000000000fb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000f00000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e1000001970000000300000e9e0000004afc0100000002fb0000000800540069006d00650200000062000003ec000004f5000001e0fb0000000800540069006d00650100000000000004500000000000000000000009a8000007d900000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730000000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000023a000003c5fc0200000019fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005c00fffffffb0000001e0054006f006f006c002000500072006f0070006500720074006900650073020000050d0000039500000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000001200720061007700200049006d0061006700650000000028000000300000000000000000fb00000012007200610077005f0069006d0061006700650000000299000001680000000000000000fb0000000c00430061006d0065007200610000000000000002330000000000000000fb00000020006c006f006f0070005f006d0061007400630068005f0069006d0061006700650000000230000001380000000000000000fb0000000a0049006d00610067006500000000000000019d0000000000000000fb000000160049006e00700075007400200069006d00610067006500000000160000035a0000002800fffffffb000000220066006500610074007500720065007300200074007200610063006b0069006e006701000003ba0000028d0000000000000000fb0000000c00430061006d00650072006101000001e80000001d0000000000000000fb0000000a0049006d0061006700650100000416000004100000000000000000fb0000001c0054007200610063006b0065006400200070006f0069006e007400730100000016000001f20000002800fffffffb000000100044006900730070006c006100790073010000020e000001cd000000c900fffffffb000000100044006900730070006c00610079007300000005950000035f000000c900fffffffc000000280000011e0000000000fffffffa000000000100000002fb0000001200720061007700200049006d0061006700650000000000ffffffff0000000000000000fb0000001a0074007200610063006b0065006400200069006d0061006700650100000000000002370000000000000000fb0000001000410052005f0069006d0061006700650100000373000000160000000000000000fb0000001200720061007700200069006d006100670065010000038f000000160000000000000000fb000000100044006900730070006c0061007900730100000427000003ff0000000000000000fb0000000c00430061006d006500720061010000059b0000028b0000000000000000fb0000000a0049006d0061006700650100000739000000ed0000000000000000000000010000020800000826fc0200000004fb0000000a00560069006500770073000000000000000826000000a400fffffffb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb000000100044006900730070006c006100790073000000040a0000041c0000000000000000fb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000f00000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e1000001970000000300000e9e0000004afc0100000002fb0000000800540069006d0065020000006200000258000004f5000001e0fb0000000800540069006d00650100000000000004500000000000000000000004fa000003c500000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730000000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -2182,6 +2616,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: true
-  Width: 3742
-  X: 98
-  Y: 44
+  Width: 1850
+  X: 70
+  Y: 27

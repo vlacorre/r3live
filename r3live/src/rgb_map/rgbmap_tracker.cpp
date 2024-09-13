@@ -1,21 +1,21 @@
-/* 
-This code is the implementation of our paper "R3LIVE: A Robust, Real-time, RGB-colored, 
+/*
+This code is the implementation of our paper "R3LIVE: A Robust, Real-time, RGB-colored,
 LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping package".
 
 Author: Jiarong Lin   < ziv.lin.ljr@gmail.com >
 
 If you use any code of this repo in your academic research, please cite at least
 one of our papers:
-[1] Lin, Jiarong, and Fu Zhang. "R3LIVE: A Robust, Real-time, RGB-colored, 
-    LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping package." 
+[1] Lin, Jiarong, and Fu Zhang. "R3LIVE: A Robust, Real-time, RGB-colored,
+    LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping package."
 [2] Xu, Wei, et al. "Fast-lio2: Fast direct lidar-inertial odometry."
 [3] Lin, Jiarong, et al. "R2LIVE: A Robust, Real-time, LiDAR-Inertial-Visual
-     tightly-coupled state Estimator and mapping." 
-[4] Xu, Wei, and Fu Zhang. "Fast-lio: A fast, robust lidar-inertial odometry 
+     tightly-coupled state Estimator and mapping."
+[4] Xu, Wei, and Fu Zhang. "Fast-lio: A fast, robust lidar-inertial odometry
     package by tightly-coupled iterated kalman filter."
-[5] Cai, Yixi, Wei Xu, and Fu Zhang. "ikd-Tree: An Incremental KD Tree for 
+[5] Cai, Yixi, Wei Xu, and Fu Zhang. "ikd-Tree: An Incremental KD Tree for
     Robotic Applications."
-[6] Lin, Jiarong, and Fu Zhang. "Loam-livox: A fast, robust, high-precision 
+[6] Lin, Jiarong, and Fu Zhang. "Loam-livox: A fast, robust, high-precision
     LiDAR odometry and mapping package for LiDARs of small FoV."
 
 For commercial use, please contact me < ziv.lin.ljr@gmail.com > and
@@ -140,12 +140,14 @@ void Rgbmap_tracker::update_and_append_track_pts( std::shared_ptr< Image_frame >
             // double grey = img_pose->get_grey_color(u, v);
             // (*map_rgb.m_pts_rgb_vec_for_projection)[i]->update_gray(grey);
             // (*map_rgb.m_pts_rgb_vec_for_projection)[i]->update_rgb(rgb_color);
+            // std::cout << "update_and_append_track_pts: res = " << res << std::endl;
             if ( res )
             {
                 double depth = ( pt_3d - img_pose->m_pose_w2c_t ).norm();
                 if ( map_2d_pts_occupied.if_exist( u_i, v_i ) == false )
                 {
                     map_2d_pts_occupied.insert( u_i, v_i, depth );
+                    // std::cout << "Adding in function update_and_append_track_pts" << std::endl;
                     m_map_rgb_pts_in_last_frame_pos[ ( *map_rgb.m_pts_rgb_vec_for_projection )[ i ].get() ] =
                         cv::Point2f( u_d, v_d );
                     new_added_pts++;
@@ -246,6 +248,7 @@ void Rgbmap_tracker::track_img( std::shared_ptr< Image_frame > &img_pose, double
     int before_track = m_last_tracked_pts.size();
     if ( m_last_tracked_pts.size() < 30 )
     {
+      // std::cout << "m_last_tracked_pts.size() < 30" << std::endl;
         m_last_frame_time = m_current_frame_time;
         return;
     }
@@ -326,6 +329,8 @@ int Rgbmap_tracker::remove_outlier_using_ransac_pnp( std::shared_ptr< Image_fram
     std::vector< cv::Point3f > pt_3d_vec, pt_3d_vec_selected;
     std::vector< cv::Point2f > pt_2d_vec, pt_2d_vec_selected;
     std::vector< void * >      map_ptr_vec;
+
+
     for ( auto it = m_map_rgb_pts_in_current_frame_pos.begin(); it != m_map_rgb_pts_in_current_frame_pos.end(); it++ )
     {
         map_ptr_vec.push_back( it->first );
@@ -335,6 +340,7 @@ int Rgbmap_tracker::remove_outlier_using_ransac_pnp( std::shared_ptr< Image_fram
     }
     if ( pt_3d_vec.size() < 10 )
     {
+        std::cout << "Not enough points for PnP" << std::endl;
         return 0;
     }
     if ( 1 )
@@ -360,6 +366,7 @@ int Rgbmap_tracker::remove_outlier_using_ransac_pnp( std::shared_ptr< Image_fram
             {
                 int inlier_idx = status[ i ];
                 {
+                    // std::cout << "Adding in function remove_outlier_using_ransac_pnp" << std::endl;
                     m_map_rgb_pts_in_last_frame_pos[ map_ptr_vec[ inlier_idx ] ] = pt_2d_vec[ inlier_idx ];
                     m_map_rgb_pts_in_current_frame_pos[ map_ptr_vec[ inlier_idx ] ] = pt_2d_vec[ inlier_idx ];
                 }
@@ -379,7 +386,7 @@ int Rgbmap_tracker::remove_outlier_using_ransac_pnp( std::shared_ptr< Image_fram
     int    if_update = 1;
     double t_diff = ( solver_t - img_pose->m_pose_w2c_t ).norm();
     double r_diff = ( solver_q ).angularDistance( img_pose->m_pose_w2c_q ) * 57.3;
-    
+
     if_update = 1;
     t_last_estimated = solver_t;
     if ( if_update )

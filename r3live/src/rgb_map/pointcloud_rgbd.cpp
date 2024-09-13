@@ -1,21 +1,21 @@
-/* 
-This code is the implementation of our paper "R3LIVE: A Robust, Real-time, RGB-colored, 
+/*
+This code is the implementation of our paper "R3LIVE: A Robust, Real-time, RGB-colored,
 LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping package".
 
 Author: Jiarong Lin   < ziv.lin.ljr@gmail.com >
 
 If you use any code of this repo in your academic research, please cite at least
 one of our papers:
-[1] Lin, Jiarong, and Fu Zhang. "R3LIVE: A Robust, Real-time, RGB-colored, 
-    LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping package." 
+[1] Lin, Jiarong, and Fu Zhang. "R3LIVE: A Robust, Real-time, RGB-colored,
+    LiDAR-Inertial-Visual tightly-coupled state Estimation and mapping package."
 [2] Xu, Wei, et al. "Fast-lio2: Fast direct lidar-inertial odometry."
 [3] Lin, Jiarong, et al. "R2LIVE: A Robust, Real-time, LiDAR-Inertial-Visual
-     tightly-coupled state Estimator and mapping." 
-[4] Xu, Wei, and Fu Zhang. "Fast-lio: A fast, robust lidar-inertial odometry 
+     tightly-coupled state Estimator and mapping."
+[4] Xu, Wei, and Fu Zhang. "Fast-lio: A fast, robust lidar-inertial odometry
     package by tightly-coupled iterated kalman filter."
-[5] Cai, Yixi, Wei Xu, and Fu Zhang. "ikd-Tree: An Incremental KD Tree for 
+[5] Cai, Yixi, Wei Xu, and Fu Zhang. "ikd-Tree: An Incremental KD Tree for
     Robotic Applications."
-[6] Lin, Jiarong, and Fu Zhang. "Loam-livox: A fast, robust, high-precision 
+[6] Lin, Jiarong, and Fu Zhang. "Loam-livox: A fast, robust, high-precision
     LiDAR odometry and mapping package for LiDARs of small FoV."
 
 For commercial use, please contact me < ziv.lin.ljr@gmail.com > and
@@ -197,7 +197,7 @@ void Global_map::service_refresh_pts_for_projection()
     {
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
         m_mutex_img_pose_for_projection->lock();
-         
+
         *img_for_projection = m_img_for_projection;
         m_mutex_img_pose_for_projection->unlock();
         if (img_for_projection->m_img_cols == 0 || img_for_projection->m_img_rows == 0)
@@ -480,7 +480,7 @@ void render_pts_in_voxels_mp(std::shared_ptr<Image_frame> &img_ptr, std::unorder
     cost_time_logger_render.flush_d();
     g_cost_time_logger.record(tim, "Render_mp");
     g_cost_time_logger.record("Pts_num_r", render_pts_count);
-    
+
 }
 
 void Global_map::render_with_a_image(std::shared_ptr<Image_frame> &img_ptr, int if_select)
@@ -533,7 +533,7 @@ void Global_map::selection_points_for_projection(std::shared_ptr<Image_frame> &i
     if ( (!use_all_pts) && boxes_recent_hitted.size())
     {
         m_mutex_rgb_pts_in_recent_hitted_boxes->lock();
-        
+
         for(Voxel_set_iterator it = boxes_recent_hitted.begin(); it != boxes_recent_hitted.end(); it++)
         {
             // pts_for_projection.push_back( (*it)->m_pts_in_grid.back() );
@@ -552,6 +552,7 @@ void Global_map::selection_points_for_projection(std::shared_ptr<Image_frame> &i
         pts_for_projection = m_rgb_pts_vec;
     }
     int pts_size = pts_for_projection.size();
+
     for (int pt_idx = 0; pt_idx < pts_size; pt_idx += skip_step)
     {
         vec_3 pt = pts_for_projection[pt_idx]->get_pos();
@@ -565,6 +566,7 @@ void Global_map::selection_points_for_projection(std::shared_ptr<Image_frame> &i
             continue;
         }
         bool res = image_pose->project_3d_point_in_this_img(pt, u_f, v_f, nullptr, 1.0);
+        /// THIS IS ALWAYS FALSE BECAUSE if_2d_points_available = FALSE... and project_3d_to_2d = False sometimes
         if (res == false)
         {
             continue;
@@ -646,7 +648,7 @@ void Global_map::save_to_pcd(std::string dir_name, std::string _file_name, int s
     pc_rgb.resize(pt_count);
     cout << "Total have " << pt_count << " points." << endl;
     tim.tic();
-    cout << "Now write to: " << file_name << endl; 
+    cout << "Now write to: " << file_name << endl;
     pcl::io::savePCDFileBinary(std::string(file_name).append(".pcd"), pc_rgb);
     cout << "Save PCD cost time = " << tim.toc() << endl;
 }
