@@ -1,5 +1,5 @@
 # Fork information
-## Comparison with the upstram repo
+## Comparison with the upstream repository
 - Made for ROS 2 Humble (Ubuntu 22.04)
 - Can handle the LiDAR Velodyne VLP-32C
 - Can handle IMUs external to the LiDAR (need to provide the extrinsics as parameters)
