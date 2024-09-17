@@ -505,8 +505,8 @@ void R3LIVE::publish_camera_odom( std::shared_ptr< Image_frame > &image, double 
     eigen_q            odom_q = image->m_pose_w2c_q;
     vec_3              odom_t = image->m_pose_w2c_t;
     nav_msgs::msg::Odometry camera_odom;
-    camera_odom.header.frame_id = "world";
-    camera_odom.child_frame_id = "/aft_mapped";
+    camera_odom.header.frame_id = "odom";
+    camera_odom.child_frame_id = "aft_mapped";
     camera_odom.header.stamp = m_ros_node_handle->get_clock()->now(); // rclcpp::Time().fromSec(last_timestamp_lidar);
     camera_odom.pose.pose.orientation.x = odom_q.x();
     camera_odom.pose.pose.orientation.y = odom_q.y();
@@ -520,7 +520,7 @@ void R3LIVE::publish_camera_odom( std::shared_ptr< Image_frame > &image, double 
 
     geometry_msgs::msg::PoseStamped msg_pose;
     msg_pose.header.stamp = rclcpp::Time(msg_time * 1e9);
-    msg_pose.header.frame_id = "world";
+    msg_pose.header.frame_id = "odom";
     msg_pose.pose.orientation.x = odom_q.x();
     msg_pose.pose.orientation.y = odom_q.y();
     msg_pose.pose.orientation.z = odom_q.z();
@@ -528,7 +528,7 @@ void R3LIVE::publish_camera_odom( std::shared_ptr< Image_frame > &image, double 
     msg_pose.pose.position.x = odom_t( 0 );
     msg_pose.pose.position.y = odom_t( 1 );
     msg_pose.pose.position.z = odom_t( 2 );
-    camera_path.header.frame_id = "world";
+    camera_path.header.frame_id = "odom";
     camera_path.poses.push_back( msg_pose );
     pub_path_cam->publish( camera_path );
 }
@@ -553,7 +553,7 @@ void R3LIVE::publish_track_pts( Rgbmap_tracker &tracker )
     sensor_msgs::msg::PointCloud2 ros_pc_msg;
     pcl::toROSMsg( pointcloud_for_pub, ros_pc_msg );
     ros_pc_msg.header.stamp = m_ros_node_handle->get_clock()->now(); //.fromSec(last_timestamp_lidar);
-    ros_pc_msg.header.frame_id = "world";       // world; camera_init
+    ros_pc_msg.header.frame_id = "odom";       // odom; camera_init
     m_pub_visual_tracked_3d_pts->publish( ros_pc_msg );
 }
 
@@ -683,7 +683,7 @@ bool      R3LIVE::vio_esikf( StatesGroup &state_in, Rgbmap_tracker &op_track )
         mat_3_3 R_imu = state_iter.rot_end;
         vec_3   t_imu = state_iter.pos_end;
         vec_3   t_c2w = R_imu * state_iter.pos_ext_i2c + t_imu;
-        mat_3_3 R_c2w = R_imu * state_iter.rot_ext_i2c; // world to camera frame
+        mat_3_3 R_c2w = R_imu * state_iter.rot_ext_i2c; // odom to camera frame
 
         fx = state_iter.cam_intrinsic( 0 );
         fy = state_iter.cam_intrinsic( 1 );
@@ -849,7 +849,7 @@ bool R3LIVE::vio_photometric( StatesGroup &state_in, Rgbmap_tracker &op_track, s
         mat_3_3 R_imu = state_iter.rot_end;
         vec_3   t_imu = state_iter.pos_end;
         vec_3   t_c2w = R_imu * state_iter.pos_ext_i2c + t_imu;
-        mat_3_3 R_c2w = R_imu * state_iter.rot_ext_i2c; // world to camera frame
+        mat_3_3 R_c2w = R_imu * state_iter.rot_ext_i2c; // odom to camera frame
 
         fx = state_iter.cam_intrinsic( 0 );
         fy = state_iter.cam_intrinsic( 1 );
@@ -1025,7 +1025,7 @@ void R3LIVE::service_pub_rgb_maps()
             {
                 pub_idx_size = 0;
                 pcl::toROSMsg( pc_rgb, ros_pc_msg );
-                ros_pc_msg.header.frame_id = "world";
+                ros_pc_msg.header.frame_id = "odom";
                 ros_pc_msg.header.stamp = m_ros_node_handle->get_clock()->now();
                 if ( m_pub_rgb_render_pointcloud_ptr_vec[ cur_topic_idx ] == nullptr )
                 {
@@ -1042,7 +1042,7 @@ void R3LIVE::service_pub_rgb_maps()
 
         pc_rgb.resize( pub_idx_size );
         pcl::toROSMsg( pc_rgb, ros_pc_msg );
-        ros_pc_msg.header.frame_id = "world";
+        ros_pc_msg.header.frame_id = "odom";
         ros_pc_msg.header.stamp = m_ros_node_handle->get_clock()->now();
         if ( m_pub_rgb_render_pointcloud_ptr_vec[ cur_topic_idx ] == nullptr )
         {
@@ -1090,7 +1090,7 @@ void R3LIVE::publish_render_pts( rclcpp::Publisher<sensor_msgs::msg::PointCloud2
         }
     }
     pcl::toROSMsg( pc_rgb, ros_pc_msg );
-    ros_pc_msg.header.frame_id = "world";       // world; camera_init
+    ros_pc_msg.header.frame_id = "odom";       // odom; camera_init
     ros_pc_msg.header.stamp = m_ros_node_handle->get_clock()->now(); //.fromSec(last_timestamp_lidar);
     pts_pub->publish( ros_pc_msg );
 }

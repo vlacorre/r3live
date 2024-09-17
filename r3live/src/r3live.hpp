@@ -431,7 +431,7 @@ public:
     }
     ~R3LIVE(){};
 
-    //project lidar frame to world
+    //project lidar frame to odom
     void pointBodyToWorld(PointType const *const pi, PointType *const po);
 
     template <typename T>

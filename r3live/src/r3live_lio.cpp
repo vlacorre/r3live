@@ -225,7 +225,7 @@ bool R3LIVE::sync_packages( MeasureGroup &meas )
     return true;
 }
 
-// project lidar frame to world
+// project lidar frame to odom
 void R3LIVE::pointBodyToWorld( PointType const *const pi, PointType *const po )
 {
     Eigen::Vector3d p_body( pi->x, pi->y, pi->z );
@@ -527,7 +527,7 @@ int R3LIVE::service_LIO_update()
 {
     nav_msgs::msg::Path path;
     path.header.stamp = m_ros_node_handle->get_clock()->now();
-    path.header.frame_id = "/world";
+    path.header.frame_id = "/odom";
     /*** variables definition ***/
     Eigen::Matrix< double, DIM_OF_STATES, DIM_OF_STATES > G, H_T_H, I_STATE;
     G.setZero();
@@ -683,7 +683,7 @@ int R3LIVE::service_LIO_update()
                     sensor_msgs::msg::PointCloud2 laserCloudMap;
                     pcl::toROSMsg( *featsFromMap, laserCloudMap );
                     laserCloudMap.header.stamp = m_ros_node_handle->get_clock()->now(); // rclcpp::Time().fromSec(last_timestamp_lidar);
-                    laserCloudMap.header.frame_id = "world";
+                    laserCloudMap.header.frame_id = "odom";
                     pubLaserCloudMap->publish( laserCloudMap );
                 }
 
@@ -718,7 +718,7 @@ int R3LIVE::service_LIO_update()
                         maximum_pt_range = std::max( ori_pt_dis, maximum_pt_range );
                         PointType &pointSel_tmpt = feats_down_updated->points[ i ];
 
-                        /* transform to world frame */
+                        /* transform to odom frame */
                         pointBodyToWorld( &pointOri_tmpt, &pointSel_tmpt );
                         std::vector< float > pointSearchSqDis_surf;
 
@@ -994,7 +994,7 @@ int R3LIVE::service_LIO_update()
 
                 for ( int i = 0; i < feats_down_size; i++ )
                 {
-                    /* transform to world frame */
+                    /* transform to odom frame */
                     pointBodyToWorld( &( feats_down->points[ i ] ), &( feats_down_updated->points[ i ] ) );
                 }
                 t4 = omp_get_wtime();
@@ -1005,8 +1005,8 @@ int R3LIVE::service_LIO_update()
                 t5 = omp_get_wtime();
             }
 
-            // std::cout << "Publishing current frame points in world coordinates" << std::endl;
-            /******* Publish current frame points in world coordinates:  *******/
+            // std::cout << "Publishing current frame points in odom coordinates" << std::endl;
+            /******* Publish current frame points in odom coordinates:  *******/
             laserCloudFullRes2->clear();
             *laserCloudFullRes2 = dense_map_en ? ( *feats_undistort ) : ( *feats_down );
 
@@ -1024,7 +1024,7 @@ int R3LIVE::service_LIO_update()
                 pcl::toROSMsg( *laserCloudFullResColor, laserCloudFullRes3 );
                 // laserCloudFullRes3.header.stamp = m_ros_node_handle->get_clock()->now(); //.fromSec(last_timestamp_lidar);
                 laserCloudFullRes3.header.stamp = rclcpp::Time( Measures.lidar_end_time * 1e9 );
-                laserCloudFullRes3.header.frame_id = "world"; // world; camera_init
+                laserCloudFullRes3.header.frame_id = "odom"; // odom; camera_init
                 pubLaserCloudFullRes->publish( laserCloudFullRes3 );
             }
 
@@ -1067,7 +1067,7 @@ int R3LIVE::service_LIO_update()
                 sensor_msgs::msg::PointCloud2 laserCloudFullRes3;
                 pcl::toROSMsg( *laserCloudFullResColor, laserCloudFullRes3 );
                 laserCloudFullRes3.header.stamp = rclcpp::Time(Measures.lidar_end_time * 1e9);
-                laserCloudFullRes3.header.frame_id = "world";
+                laserCloudFullRes3.header.frame_id = "odom";
                 pubLaserCloudEffect->publish( laserCloudFullRes3 );
             }
 
@@ -1076,21 +1076,21 @@ int R3LIVE::service_LIO_update()
             sensor_msgs::msg::PointCloud2 laserCloudMap;
             pcl::toROSMsg( *featsFromMap, laserCloudMap );
             laserCloudMap.header.stamp = rclcpp::Time( Measures.lidar_end_time * 1e9 );
-            laserCloudMap.header.frame_id = "world";
+            laserCloudMap.header.frame_id = "odom";
             pubLaserCloudMap->publish( laserCloudMap );
 
             // std::cout << "Publishing Odometry" << std::endl;
             /******* Publish Odometry ******/
-            const double roll = euler_cur( 0 );
-            const double pitch = euler_cur( 1 );
-            const double yaw = euler_cur( 2 );
-            const double qx = sin(roll/2) * cos(pitch/2) * cos(yaw/2) - cos(roll/2) * sin(pitch/2) * sin(yaw/2);
-            const double qy = cos(roll/2) * sin(pitch/2) * cos(yaw/2) + sin(roll/2) * cos(pitch/2) * sin(yaw/2);
-            const double qz = cos(roll/2) * cos(pitch/2) * sin(yaw/2) - sin(roll/2) * sin(pitch/2) * cos(yaw/2);
-            const double qw = cos(roll/2) * cos(pitch/2) * cos(yaw/2) + sin(roll/2) * sin(pitch/2) * sin(yaw/2);
-            geometry_msgs::msg::Quaternion geoQuat = tf2::toMsg(tf2::Quaternion(qx, qy, qz, qw));
-            odomAftMapped.header.frame_id = "world";
-            odomAftMapped.child_frame_id = "/aft_mapped";
+
+            tf2::Quaternion odom_quat;
+            odom_quat.setEuler(euler_cur( 1 ), euler_cur( 0 ), euler_cur( 2 ));
+            // yaw	 = Angle around Y = euler_cur( 1 )
+            // pitch = Angle around X = euler_cur( 0 )
+            // roll	 = Angle around Z = euler_cur( 2 )
+
+            geometry_msgs::msg::Quaternion geoQuat = tf2::toMsg(odom_quat);
+            odomAftMapped.header.frame_id = "odom";
+            odomAftMapped.child_frame_id = "aft_mapped";
             odomAftMapped.header.stamp = m_ros_node_handle->get_clock()->now();
             odomAftMapped.pose.pose.orientation.x = geoQuat.x;
             odomAftMapped.pose.pose.orientation.y = geoQuat.y;
@@ -1099,6 +1099,33 @@ int R3LIVE::service_LIO_update()
             odomAftMapped.pose.pose.position.x = g_lio_state.pos_end( 0 );
             odomAftMapped.pose.pose.position.y = g_lio_state.pos_end( 1 );
             odomAftMapped.pose.pose.position.z = g_lio_state.pos_end( 2 );
+
+            // TODO vlacorre: Check if the covariance is correct
+            // Cf. R3LIVE::set_initial_state_cov
+              // state.cov.block(18, 18, 6 , 6 ) = state.cov.block(18, 18, 6 , 6 ) .setIdentity() * 0.1;
+              // state.cov.block(24, 24, 5 , 5 ) = state.cov.block(24, 24, 5 , 5 ).setIdentity() * 0.001;
+              // state.cov.block( 0, 0, 3, 3 ) = mat_3_3::Identity() * 1e-5;   // R
+              // state.cov.block( 3, 3, 3, 3 ) = mat_3_3::Identity() * 1e-5;   // T
+              // state.cov.block( 6, 6, 3, 3 ) = mat_3_3::Identity() * 1e-5;   // vel
+              // state.cov.block( 9, 9, 3, 3 ) = mat_3_3::Identity() * 1e-3;   // bias_g
+              // state.cov.block( 12, 12, 3, 3 ) = mat_3_3::Identity() * 1e-1; // bias_a
+              // state.cov.block( 15, 15, 3, 3 ) = mat_3_3::Identity() * 1e-5; // Gravity
+              // state.cov( 24, 24 ) = 0.00001;
+              // state.cov.block( 18, 18, 6, 6 ) = state.cov.block( 18, 18, 6, 6 ).setIdentity() *  1e-3; // Extrinsic between camera and IMU.
+              // state.cov.block( 25, 25, 4, 4 ) = state.cov.block( 25, 25, 4, 4 ).setIdentity() *  1e-3; // Camera intrinsic.
+
+            odomAftMapped.pose.covariance[ 0 ]  = 0.0001;
+            odomAftMapped.pose.covariance[ 7 ]  = 0.0001;
+            odomAftMapped.pose.covariance[ 14 ] = 0.0001;
+            odomAftMapped.pose.covariance[ 21 ] = 0.0001;
+            odomAftMapped.pose.covariance[ 28 ] = 0.0001;
+            odomAftMapped.pose.covariance[ 35 ] = 0.0001;
+
+            // TODO vlacorre: Check if vel_end is correct
+            odomAftMapped.twist.twist.linear.x = g_lio_state.vel_end( 0 );
+            odomAftMapped.twist.twist.linear.y = g_lio_state.vel_end( 1 );
+            odomAftMapped.twist.twist.linear.z = g_lio_state.vel_end( 2 );
+
 
             // std::cout << "publishing pubOdomAftMapped" << std::endl;
             pubOdomAftMapped->publish( odomAftMapped );
@@ -1116,8 +1143,8 @@ int R3LIVE::service_LIO_update()
             transform.setRotation( q );
             geometry_msgs::msg::TransformStamped stampedTransform;
             stampedTransform.header.stamp = rclcpp::Time(Measures.lidar_end_time * 1e9);
-            stampedTransform.header.frame_id = "world";
-            stampedTransform.child_frame_id = "/aft_mapped";
+            stampedTransform.header.frame_id = "odom";
+            stampedTransform.child_frame_id = "aft_mapped";
             stampedTransform.transform = tf2::toMsg(transform);
             br.sendTransform( stampedTransform );
 
@@ -1133,7 +1160,7 @@ int R3LIVE::service_LIO_update()
 
             // std::cout << "Publishing Path" << std::endl;
             /******* Publish Path ********/
-            msg_body_pose.header.frame_id = "world";
+            msg_body_pose.header.frame_id = "odom";
             if ( frame_num > 10 )
             {
                 path.poses.push_back( msg_body_pose );
