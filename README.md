@@ -3,7 +3,8 @@
 - Made for ROS 2 Humble (Ubuntu 22.04)
 - Can handle the LiDAR Velodyne VLP-32C
 - Can handle IMUs external to the LiDAR (need to provide the extrinsics as parameters)
-- Cannot handle Livox LiDAR
+- Renamed tf2 frames such that the published odometry on the topic /aft_mapped_to_init and its associated tranform is done between frames "odom" and "aft_mapped".
+- Cannot handle Livox LiDAR (although it should be easy to add)
 
 ---
 
