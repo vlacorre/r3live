@@ -12,7 +12,15 @@
          [1.0, 0.0, 0.0,
           0.0, 1.0, 0.0,
           0.0, 0.0, 1.0 ]
-   Lidar_front_end/lidar2imu_t: [0.17,0.06,-0.31] # movement to do to move the LiDAR to the IMU position
+
+  # rotz(pi/2) # TEST
+  #  Lidar_front_end/lidar2imu_R:
+  #       [0.0, -1.0, 0.0,
+  #        1.0, 0.0, 0.0,
+  #        0.0, 0.0, 1.0 ]
+
+   Lidar_front_end/lidar2imu_t: [0.0,0.0,-0.345] # movement to do to move the LiDAR to the IMU position # SUBSTITUTE
+  #  Lidar_front_end/lidar2imu_t: [0.17,0.06,-0.31] # movement to do to move the LiDAR to the IMU position
   #  Lidar_front_end/lidar2imu_t: [-0.17,-0.06, 0.31] # Coordinates of LiDAR in the IMU frame
 
    # IMPORTANT: /LiDAR_pointcloud_topic should not be modified. LiDAR_front_end will publish the pointcloud to this topic.
@@ -48,7 +56,9 @@
          [ 0.0,  0.0,  1.0,
           -1.0,  0.0,  0.0,
            0.0, -1.0,  0.0]
-   r3live_vio/camera_ext_t: [-0.045,0.06,-0.01] # movement to do to move the camera to the IMU position
+
+   r3live_vio/camera_ext_t: [-0.08, 0.0, 0.035] # movement to do to move the camera to the IMU position # SUBSTITUTE
+  #  r3live_vio/camera_ext_t: [-0.045,0.06,-0.01] # movement to do to move the camera to the IMU position
   #  r3live_vio/camera_ext_t: [0.045,-0.06,0.01] # Coordinates of camera in the IMU frame
 
    #    [0, 0, 1,
