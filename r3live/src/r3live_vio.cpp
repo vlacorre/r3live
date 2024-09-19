@@ -234,12 +234,12 @@ void R3LIVE::publish_track_img( cv::Mat &img, double frame_cost_time = -1 )
 
         if ( pub_image.cols <= 640 )
         {
-            cv::putText( pub_image, std::string( fps_char ), cv::Point( 30, 30 ), cv::FONT_HERSHEY_COMPLEX, 1, cv::Scalar( 255, 255, 255 ), 2, 8,
+            cv::putText( pub_image, std::string( fps_char ), cv::Point( 30, 30 ), cv::FONT_HERSHEY_COMPLEX, 0.75, cv::Scalar( 255, 255, 255 ), 2, 8,
                          0 ); // 640 * 480
         }
         else if ( pub_image.cols > 640 )
         {
-            cv::putText( pub_image, std::string( fps_char ), cv::Point( 30, 50 ), cv::FONT_HERSHEY_COMPLEX, 2, cv::Scalar( 255, 255, 255 ), 2, 8,
+            cv::putText( pub_image, std::string( fps_char ), cv::Point( 30, 50 ), cv::FONT_HERSHEY_COMPLEX, 1.5, cv::Scalar( 255, 255, 255 ), 2, 8,
                          0 ); // 1280 * 1080
         }
     }

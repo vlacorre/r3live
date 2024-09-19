@@ -42,8 +42,10 @@
    r3live_common/Image_topic: "/webcam"
 
    # Logitech C925e webcam
-   r3live_vio/image_width: 1280
-   r3live_vio/image_height: 720
+   r3live_vio/image_width: 848
+   r3live_vio/image_height: 480
+  #  r3live_vio/image_width: 1280
+  #  r3live_vio/image_height: 720
    r3live_vio/camera_intrinsic:
       [968.419195, 0.0, 642.323433,
       0.0,  964.789930, 345.014000,
