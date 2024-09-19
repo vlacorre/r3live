@@ -1092,13 +1092,6 @@ int R3LIVE::service_LIO_update()
             odomAftMapped.header.frame_id = "odom";
             odomAftMapped.child_frame_id = "aft_mapped";
             odomAftMapped.header.stamp = m_ros_node_handle->get_clock()->now();
-            odomAftMapped.pose.pose.orientation.x = geoQuat.x;
-            odomAftMapped.pose.pose.orientation.y = geoQuat.y;
-            odomAftMapped.pose.pose.orientation.z = geoQuat.z;
-            odomAftMapped.pose.pose.orientation.w = geoQuat.w;
-            odomAftMapped.pose.pose.position.x = g_lio_state.pos_end( 0 );
-            odomAftMapped.pose.pose.position.y = g_lio_state.pos_end( 1 );
-            odomAftMapped.pose.pose.position.z = g_lio_state.pos_end( 2 );
 
             // TODO vlacorre: Check if the covariance is correct
             // Cf. R3LIVE::set_initial_state_cov
@@ -1114,17 +1107,31 @@ int R3LIVE::service_LIO_update()
               // state.cov.block( 18, 18, 6, 6 ) = state.cov.block( 18, 18, 6, 6 ).setIdentity() *  1e-3; // Extrinsic between camera and IMU.
               // state.cov.block( 25, 25, 4, 4 ) = state.cov.block( 25, 25, 4, 4 ).setIdentity() *  1e-3; // Camera intrinsic.
 
-            odomAftMapped.pose.covariance[ 0 ]  = 0.0001;
-            odomAftMapped.pose.covariance[ 7 ]  = 0.0001;
-            odomAftMapped.pose.covariance[ 14 ] = 0.0001;
-            odomAftMapped.pose.covariance[ 21 ] = 0.0001;
-            odomAftMapped.pose.covariance[ 28 ] = 0.0001;
-            odomAftMapped.pose.covariance[ 35 ] = 0.0001;
+            // Position
+            odomAftMapped.pose.pose.position.x = g_lio_state.pos_end( 0 );
+            odomAftMapped.pose.pose.position.y = g_lio_state.pos_end( 1 );
+            odomAftMapped.pose.pose.position.z = g_lio_state.pos_end( 2 );
+            odomAftMapped.pose.covariance[ 0 ]  = 1.0;
+            odomAftMapped.pose.covariance[ 7 ]  = 1.0;
+            odomAftMapped.pose.covariance[ 14 ] = 1.0;
+
+            // Orientation
+            odomAftMapped.pose.pose.orientation.x = geoQuat.x;
+            odomAftMapped.pose.pose.orientation.y = geoQuat.y;
+            odomAftMapped.pose.pose.orientation.z = geoQuat.z;
+            odomAftMapped.pose.pose.orientation.w = geoQuat.w;
+            odomAftMapped.pose.covariance[ 21 ] = 1.0;
+            odomAftMapped.pose.covariance[ 28 ] = 1.0;
+            odomAftMapped.pose.covariance[ 35 ] = 1.0;
 
             // TODO vlacorre: Check if vel_end is correct
+            // Linear twist
             odomAftMapped.twist.twist.linear.x = g_lio_state.vel_end( 0 );
             odomAftMapped.twist.twist.linear.y = g_lio_state.vel_end( 1 );
             odomAftMapped.twist.twist.linear.z = g_lio_state.vel_end( 2 );
+            odomAftMapped.twist.covariance[ 0 ]  = 1.0;
+            odomAftMapped.twist.covariance[ 7 ]  = 1.0;
+            odomAftMapped.twist.covariance[ 14 ] = 1.0;
 
 
             // std::cout << "publishing pubOdomAftMapped" << std::endl;
@@ -1142,7 +1149,8 @@ int R3LIVE::service_LIO_update()
             q.setZ( odomAftMapped.pose.pose.orientation.z );
             transform.setRotation( q );
             geometry_msgs::msg::TransformStamped stampedTransform;
-            stampedTransform.header.stamp = rclcpp::Time(Measures.lidar_end_time * 1e9);
+            // stampedTransform.header.stamp = rclcpp::Time(Measures.lidar_end_time * 1e9); # TODO vlacorre: revert if not using rosbag and need accurate stamp
+            stampedTransform.header.stamp = m_ros_node_handle->now();
             stampedTransform.header.frame_id = "odom";
             stampedTransform.child_frame_id = "aft_mapped";
             stampedTransform.transform = tf2::toMsg(transform);
