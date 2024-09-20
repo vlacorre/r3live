@@ -1111,28 +1111,27 @@ int R3LIVE::service_LIO_update()
             odomAftMapped.pose.pose.position.x = g_lio_state.pos_end( 0 );
             odomAftMapped.pose.pose.position.y = g_lio_state.pos_end( 1 );
             odomAftMapped.pose.pose.position.z = g_lio_state.pos_end( 2 );
-            odomAftMapped.pose.covariance[ 0 ]  = 1.0;
-            odomAftMapped.pose.covariance[ 7 ]  = 1.0;
-            odomAftMapped.pose.covariance[ 14 ] = 1.0;
+            odomAftMapped.pose.covariance[ 0 ]  = g_lio_state.cov(0, 0);
+            odomAftMapped.pose.covariance[ 7 ]  = g_lio_state.cov(1, 1);
+            odomAftMapped.pose.covariance[ 14 ] = g_lio_state.cov(2, 2);
 
             // Orientation
             odomAftMapped.pose.pose.orientation.x = geoQuat.x;
             odomAftMapped.pose.pose.orientation.y = geoQuat.y;
             odomAftMapped.pose.pose.orientation.z = geoQuat.z;
             odomAftMapped.pose.pose.orientation.w = geoQuat.w;
-            odomAftMapped.pose.covariance[ 21 ] = 1.0;
-            odomAftMapped.pose.covariance[ 28 ] = 1.0;
-            odomAftMapped.pose.covariance[ 35 ] = 1.0;
+            odomAftMapped.pose.covariance[ 21 ] = g_lio_state.cov(3, 3);
+            odomAftMapped.pose.covariance[ 28 ] = g_lio_state.cov(4, 4);
+            odomAftMapped.pose.covariance[ 35 ] = g_lio_state.cov(5, 5);
 
             // TODO vlacorre: Check if vel_end is correct
             // Linear twist
             odomAftMapped.twist.twist.linear.x = g_lio_state.vel_end( 0 );
             odomAftMapped.twist.twist.linear.y = g_lio_state.vel_end( 1 );
             odomAftMapped.twist.twist.linear.z = g_lio_state.vel_end( 2 );
-            odomAftMapped.twist.covariance[ 0 ]  = 1.0;
-            odomAftMapped.twist.covariance[ 7 ]  = 1.0;
-            odomAftMapped.twist.covariance[ 14 ] = 1.0;
-
+            odomAftMapped.twist.covariance[ 0 ]  = g_lio_state.cov(6, 6);
+            odomAftMapped.twist.covariance[ 7 ]  = g_lio_state.cov(7, 7);
+            odomAftMapped.twist.covariance[ 14 ] = g_lio_state.cov(8, 8);
 
             // std::cout << "publishing pubOdomAftMapped" << std::endl;
             pubOdomAftMapped->publish( odomAftMapped );
