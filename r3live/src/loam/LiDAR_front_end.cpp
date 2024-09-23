@@ -429,31 +429,31 @@ void vlp_32c_lidar_handler(const sensor_msgs::msg::PointCloud2::ConstSharedPtr &
   // printf("vlp_32c_lidar_handler\n");
     pcl::PointCloud< PointType > pl_processed;
     pcl::PointCloud< pcl::PointXYZI > pl_before_tf;
-    pcl::PointCloud< pcl::PointXYZI > pl_orig;
     pcl::fromROSMsg<pcl::PointXYZI>( *msg, pl_before_tf );
 
     // Transform lidar point cloud to account for the IMU - LiDAR extrinsic
-    pcl::transformPointCloud(pl_before_tf, pl_orig, lidar2imu_tf);
+    pcl::PointCloud< pcl::PointXYZI > pl_after_tf;
+    pcl::transformPointCloud(pl_before_tf, pl_after_tf, lidar2imu_tf);
 
-    uint plsize = pl_orig.size();
+    uint plsize = pl_after_tf.size();
 
     double time_stamp = rclcpp::Time(msg->header.stamp).seconds();
     pl_processed.clear();
-    pl_processed.reserve( pl_orig.points.size() );
-    for ( int i = 0; i < pl_orig.points.size(); i++ )
+    pl_processed.reserve( pl_after_tf.points.size() );
+    for ( int i = 0; i < pl_after_tf.points.size(); i++ )
     {
-        double range = std::sqrt( pl_orig.points[ i ].x * pl_orig.points[ i ].x + pl_orig.points[ i ].y * pl_orig.points[ i ].y +
-                                  pl_orig.points[ i ].z * pl_orig.points[ i ].z );
+        double range = std::sqrt( pl_after_tf.points[ i ].x * pl_after_tf.points[ i ].x + pl_after_tf.points[ i ].y * pl_after_tf.points[ i ].y +
+                                  pl_after_tf.points[ i ].z * pl_after_tf.points[ i ].z );
         if ( range < blind )
         {
             continue;
         }
         Eigen::Vector3d pt_vec;
         PointType       added_pt;
-        added_pt.x = pl_orig.points[ i ].x;
-        added_pt.y = pl_orig.points[ i ].y;
-        added_pt.z = pl_orig.points[ i ].z;
-        added_pt.intensity = pl_orig.points[ i ].intensity;
+        added_pt.x = pl_after_tf.points[ i ].x;
+        added_pt.y = pl_after_tf.points[ i ].y;
+        added_pt.z = pl_after_tf.points[ i ].z;
+        added_pt.intensity = pl_after_tf.points[ i ].intensity;
         double yaw_angle = std::atan2( added_pt.y, added_pt.x ) * 57.3;
         if ( yaw_angle >= 180.0 )
             yaw_angle -= 360.0;
@@ -469,12 +469,12 @@ void vlp_32c_lidar_handler(const sensor_msgs::msg::PointCloud2::ConstSharedPtr &
         {
             if ( pl_processed.size() % 1000 == 0 )
             {
-                // printf( "[%d] (%.2f, %.2f, %.2f), ( %.2f, %.2f, %.2f ) | %.2f | %.3f,  \r\n", i, pl_orig.points[ i ].x, pl_orig.points[ i ].y,
-                //         pl_orig.points[ i ].z, pl_processed.points.back().normal_x, pl_processed.points.back().normal_y,
+                // printf( "[%d] (%.2f, %.2f, %.2f), ( %.2f, %.2f, %.2f ) | %.2f | %.3f,  \r\n", i, pl_after_tf.points[ i ].x, pl_after_tf.points[ i ].y,
+                //         pl_after_tf.points[ i ].z, pl_processed.points.back().normal_x, pl_processed.points.back().normal_y,
                 //         pl_processed.points.back().normal_z, yaw_angle, pl_processed.points.back().intensity );
-                // printf("(%d, %.2f, %.2f)\r\n", pl_orig.points[i].ring, pl_orig.points[i].t, pl_orig.points[i].range);
-                // printf("(%d, %d, %d)\r\n", pl_orig.points[i].ring, 1, 2);
-                // cout << ( int ) ( pl_orig.points[ i ].ring ) << ", " << ( pl_orig.points[ i ].t / 1e9 ) << ", " << pl_orig.points[ i ].range << endl;
+                // printf("(%d, %.2f, %.2f)\r\n", pl_after_tf.points[i].ring, pl_after_tf.points[i].t, pl_after_tf.points[i].range);
+                // printf("(%d, %d, %d)\r\n", pl_after_tf.points[i].ring, 1, 2);
+                // cout << ( int ) ( pl_after_tf.points[ i ].ring ) << ", " << ( pl_after_tf.points[ i ].t / 1e9 ) << ", " << pl_after_tf.points[ i ].range << endl;
             }
         }
     }

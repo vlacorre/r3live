@@ -354,10 +354,10 @@ public:
         // sub_img = m_ros_node_handle.subscribe(IMAGE_topic.c_str(), 1000000, &R3LIVE::image_callback, this, ros::TransportHints().tcpNoDelay());
         // sub_img_comp = m_ros_node_handle.subscribe(IMAGE_topic_compressed.c_str(), 1000000, &R3LIVE::image_comp_callback, this, ros::TransportHints().tcpNoDelay());
 
-        sub_imu = m_ros_node_handle->create_subscription<sensor_msgs::msg::Imu>(IMU_topic.c_str(), 2000000, std::bind(&R3LIVE::imu_cbk, this, std::placeholders::_1));
-        sub_pcl = m_ros_node_handle->create_subscription<sensor_msgs::msg::PointCloud2>(LiDAR_pointcloud_topic.c_str(), 2000000, std::bind(&R3LIVE::feat_points_cbk, this, std::placeholders::_1));
-        sub_img = m_ros_node_handle->create_subscription<sensor_msgs::msg::Image>(IMAGE_topic.c_str(), 1000000, std::bind(&R3LIVE::image_callback, this, std::placeholders::_1));
-        sub_img_comp = m_ros_node_handle->create_subscription<sensor_msgs::msg::CompressedImage>(IMAGE_topic_compressed.c_str(), 1000000, std::bind(&R3LIVE::image_comp_callback, this, std::placeholders::_1));
+        sub_imu = m_ros_node_handle->create_subscription<sensor_msgs::msg::Imu>(IMU_topic.c_str(), rclcpp::QoS(rclcpp::KeepLast(2000000)).best_effort(), std::bind(&R3LIVE::imu_cbk, this, std::placeholders::_1));
+        sub_pcl = m_ros_node_handle->create_subscription<sensor_msgs::msg::PointCloud2>(LiDAR_pointcloud_topic.c_str(), rclcpp::QoS(rclcpp::KeepLast(2000000)).best_effort(), std::bind(&R3LIVE::feat_points_cbk, this, std::placeholders::_1));
+        sub_img = m_ros_node_handle->create_subscription<sensor_msgs::msg::Image>(IMAGE_topic.c_str(), rclcpp::QoS(rclcpp::KeepLast(1000000)).best_effort(), std::bind(&R3LIVE::image_callback, this, std::placeholders::_1));
+        sub_img_comp = m_ros_node_handle->create_subscription<sensor_msgs::msg::CompressedImage>(IMAGE_topic_compressed.c_str(), rclcpp::QoS(rclcpp::KeepLast(1000000)).best_effort(), std::bind(&R3LIVE::image_comp_callback, this, std::placeholders::_1));
 
         m_pub_rgb_render_pointcloud_ptr_vec.resize(1e3);
         // ANCHOR - ROS parameters
